@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        colorScheme: ColorScheme.light(),
         appBarTheme: AppBarTheme(
           brightness: Brightness.light,
           color: Colors.white,

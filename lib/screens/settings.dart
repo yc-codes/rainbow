@@ -10,7 +10,6 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
         title: Text(
           'Settings',
           style: Theme.of(context).appBarTheme.titleTextStyle,

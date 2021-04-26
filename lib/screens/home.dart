@@ -47,6 +47,7 @@ class _HomeState extends State<Home> {
                     _notify();
                   },
                   physics: NeverScrollableScrollPhysics(),
+                  reverse: true,
                   children: List.generate(_colorsList.length, (index) {
                     Color _color =
                         Color(int.parse('0xFF' + _colorsList[index]));

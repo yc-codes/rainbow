@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Rainbow',
       theme: ThemeData(
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: ButtonStyle(
@@ -21,6 +21,12 @@ class MyApp extends StatelessWidget {
             ),
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             minimumSize: MaterialStateProperty.all<Size>(Size.zero),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.5),
+                side: BorderSide(color: Colors.red),
+              ),
+            ),
           ),
         ),
         primarySwatch: Colors.blue,
@@ -66,7 +72,6 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
         child: Container(
           constraints: BoxConstraints(),
-          color: Colors.blueGrey.shade100,
           child: Column(
             children: [
               Expanded(
@@ -75,7 +80,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (newIndex > oldIndex) {
                       newIndex -= 1;
                     }
-                    // final item =
+                    final _color = _colorsList.removeAt(oldIndex);
+                    _colorsList.insert(newIndex, _color);
+                    _notify();
                   },
                   physics: NeverScrollableScrollPhysics(),
                   children: List.generate(_colorsList.length, (index) {
@@ -85,6 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ? Colors.white
                         : Colors.black;
                     return Dismissible(
+                      key: UniqueKey(),
                       confirmDismiss: (DismissDirection direction) {
                         if (direction == DismissDirection.startToEnd) {
                           if (_lockedColorsList.contains(_colorsList[index])) {
@@ -103,7 +111,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         _colorsList.removeAt(index);
                         _notify();
                       },
-                      key: UniqueKey(),
                       background: Container(
                         color: Colors.green,
                         alignment: Alignment.centerLeft,

@@ -158,13 +158,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     OutlinedButton(
                       onPressed: () {
-                        _colorsList.add(returnRandomHex());
-                        _notify();
+                        // print(_lockedColorsList);
+                        // _lockedColorsList = [];
+                        // _notify();
                       },
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8),
                         child: Icon(
-                          Icons.add,
+                          Icons.settings_outlined,
                           color: Colors.black54,
                           size: 30,
                         ),
@@ -188,14 +189,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     OutlinedButton(
                       onPressed: () {
-                        // print(_lockedColorsList);
-                        // _lockedColorsList = [];
-                        // _notify();
+                        _colorsList.add(returnRandomHex());
+                        _notify();
                       },
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8),
                         child: Icon(
-                          Icons.info_outline,
+                          Icons.add,
                           color: Colors.black54,
                           size: 30,
                         ),

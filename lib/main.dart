@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Rainbow',
       theme: ThemeData(
         brightness: Brightness.light,
+        fontFamily: 'Inter',
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: ButtonStyle(
             padding: MaterialStateProperty.all<EdgeInsets>(
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.white,
         primarySwatch: Colors.blue,
-        splashFactory: MaterialInkSplash.splashFactory,
+        // splashFactory: MaterialInkSplash.splashFactory,
       ),
       // darkTheme: ThemeData(
       //   outlinedButtonTheme: OutlinedButtonThemeData(

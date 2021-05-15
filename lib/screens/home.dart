@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:hive/hive.dart';
 import 'package:rainbow/screens/settings.dart';
 import 'package:rainbow/utility/page_transition.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -18,10 +19,15 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    super.initState();
     for (var i = 0; i < 6; i++) {
       _colorsList.add(returnRandomHex());
     }
+    _getInitColors();
+    super.initState();
+  }
+
+  _getInitColors() async {
+    await Hive.openBox<String>('colors');
   }
 
   @override
@@ -94,7 +100,7 @@ class _HomeState extends State<Home> {
                         child: ListTile(
                           onTap: () {},
                           title: Text(
-                            '#' + _colorsList[index],
+                            _colorsList[index].toUpperCase(),
                             style: TextStyle(
                               color: _textColor,
                             ),

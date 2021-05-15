@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
 import 'package:rainbow/screens/home.dart';
-import 'package:rainbow/utility/material_ink_splash.dart';
+import 'package:rainbow/utility/material_ink_splash.dart' as androidish;
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
   runApp(MyApp());
 }
 
@@ -41,7 +44,7 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.white,
         primarySwatch: Colors.blue,
-        // splashFactory: MaterialInkSplash.splashFactory,
+        splashFactory: androidish.MaterialInkSplash.splashFactory,
       ),
       // darkTheme: ThemeData(
       //   outlinedButtonTheme: OutlinedButtonThemeData(

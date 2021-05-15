@@ -94,7 +94,7 @@ packages:
       name: pigment
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -145,9 +145,11 @@ packages:
   tinycolor:
     dependency: "direct main"
     description:
-      name: tinycolor
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: master
+      resolved-ref: e889971a0e903585ad8e8db3b7fb12b76b24ed93
+      url: "git://github.com/yc-codes/tinycolor.git"
+    source: git
     version: "1.0.3"
   typed_data:
     dependency: transitive

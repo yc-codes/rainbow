@@ -18,12 +18,17 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  tinycolor: ^1.0.3
+
+  tinycolor: 
+    git:
+      url: git://github.com/yc-codes/tinycolor.git
+      ref: master
+
   flutter_slidable: ^0.6.0
 
 

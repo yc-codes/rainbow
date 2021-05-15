@@ -1,11 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:rainbow/screens/color.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:rainbow/screens/settings.dart';
 import 'package:rainbow/utility/page_transition.dart';
 import 'package:tinycolor/tinycolor.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -55,7 +54,7 @@ class _HomeState extends State<Home> {
                   final _textColor =
                       TinyColor(_color).isDark() ? Colors.white : Colors.black;
                   return Slidable(
-                    key: UniqueKey(),
+                    key: Key(_colorsList[index]),
                     actionPane: SlidableDrawerActionPane(),
                     actionExtentRatio: 0.2,
                     secondaryActions: <Widget>[
@@ -88,15 +87,17 @@ class _HomeState extends State<Home> {
                         },
                       ),
                     ],
-                    child: Container(
-                      height: _colorHeight,
-                      color: _color,
-                      child: ListTile(
-                        onTap: () {},
-                        title: Text(
-                          '#' + _colorsList[index],
-                          style: TextStyle(
-                            color: _textColor,
+                    child: InkWell(
+                      child: Container(
+                        height: _colorHeight,
+                        color: _color,
+                        child: ListTile(
+                          onTap: () {},
+                          title: Text(
+                            '#' + _colorsList[index],
+                            style: TextStyle(
+                              color: _textColor,
+                            ),
                           ),
                         ),
                       ),

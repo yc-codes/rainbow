@@ -5,7 +5,7 @@ class ColorScreen extends StatefulWidget {
   final Color color;
 
   ColorScreen({
-    @required this.color,
+    required this.color,
   });
   @override
   _ColorScreenState createState() => _ColorScreenState();

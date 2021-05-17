@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive/hive.dart';
+import 'package:rainbow/screens/color.dart';
 import 'package:rainbow/screens/settings.dart';
 import 'package:rainbow/utility/page_transition.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -56,50 +57,89 @@ class _HomeState extends State<Home> {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 children: List.generate(_colorsList.length, (index) {
-                  Color _color = Color(int.parse('0xFF' + _colorsList[index]));
-                  final _textColor =
+                  final Color _color =
+                      Color(int.parse('0xFF' + _colorsList[index]));
+                  final Color _textColor =
                       TinyColor(_color).isDark() ? Colors.white : Colors.black;
-                  return Slidable(
+                  return Dismissible(
                     key: Key(_colorsList[index]),
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.2,
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                        caption: _lockedColorsList.contains(_colorsList[index])
-                            ? 'Unlock'
-                            : 'Lock',
-                        color: _color.darken(),
-                        icon: _lockedColorsList.contains(_colorsList[index])
+                    confirmDismiss: (DismissDirection direction) {
+                      if (direction == DismissDirection.startToEnd) {
+                        if (_lockedColorsList.contains(_colorsList[index])) {
+                          _lockedColorsList.remove(_colorsList[index]);
+                        } else {
+                          _lockedColorsList.add(_colorsList[index]);
+                        }
+                        _notify();
+                        return Future<bool>.value(false);
+                      }
+
+                      return Future<bool>.value(true);
+                    },
+                    onDismissed: (DismissDirection direction) {
+                      _lockedColorsList.remove(_colorsList[index]);
+                      _colorsList.removeAt(index);
+                      _notify();
+                    },
+                    background: Container(
+                      color: _color.darken(),
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      child: Icon(
+                        _lockedColorsList.contains(_colorsList[index])
                             ? Icons.lock_open
                             : Icons.lock_outline,
-                        onTap: () {
-                          if (_lockedColorsList.contains(_colorsList[index])) {
-                            _lockedColorsList.remove(_colorsList[index]);
-                          } else {
-                            _lockedColorsList.add(_colorsList[index]);
-                          }
-                          if (mounted) _notify();
-                        },
-                        closeOnTap: false,
+                        color: Colors.white,
+                        size: 32,
                       ),
-                      IconSlideAction(
-                        caption: 'Delete',
-                        color: _color.darken(),
-                        icon: Icons.delete,
-                        onTap: () {
-                          _lockedColorsList.remove(_colorsList[index]);
-                          _colorsList.removeAt(index);
-                          _notify();
-                        },
+                    ),
+                    secondaryBackground: Container(
+                      color: _color.darken(),
+                      alignment: Alignment.centerRight,
+                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      child: Icon(
+                        Icons.remove_circle_outline,
+                        color: Colors.white,
+                        size: 32,
                       ),
-                    ],
-                    child: InkWell(
-                      child: Container(
-                        height: _colorHeight,
-                        color: _color,
-                        child: ListTile(
-                          onTap: () {},
-                          title: Text(
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: _colorHeight,
+                      color: _color,
+                      padding: EdgeInsets.only(right: 12),
+                      child: ListTile(
+                        tileColor: _color,
+                        hoverColor: _color.darken(5),
+                        trailing: IconButton(
+                          icon: Icon(
+                            _lockedColorsList.contains(_colorsList[index])
+                                ? Icons.lock
+                                : Icons.lock_open,
+                          ),
+                          color: _color.isDark
+                              ? _color.lighten(20)
+                              : _color.darken(20),
+                          onPressed: () {
+                            if (_lockedColorsList
+                                .contains(_colorsList[index])) {
+                              _lockedColorsList.remove(_colorsList[index]);
+                            } else {
+                              _lockedColorsList.add(_colorsList[index]);
+                            }
+                            if (mounted) _notify();
+                          },
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            goToScreen(ColorScreen(color: _color)),
+                          );
+                        },
+                        title: Container(
+                          height: _colorHeight,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
                             _colorsList[index].toUpperCase(),
                             style: TextStyle(
                               color: _textColor,

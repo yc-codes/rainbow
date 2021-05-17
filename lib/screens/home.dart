@@ -1,7 +1,7 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive/hive.dart';
 import 'package:rainbow/screens/color.dart';
 import 'package:rainbow/screens/settings.dart';
@@ -20,15 +20,30 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    for (var i = 0; i < 6; i++) {
-      _colorsList.add(returnRandomHex());
-    }
     _getInitColors();
     super.initState();
   }
 
   _getInitColors() async {
-    await Hive.openBox<String>('colors');
+    var box = await Hive.openBox('data');
+    String? colors = box.get('colors');
+    print(colors);
+    if (colors != null) {
+      print('inside ! null');
+      _colorsList.addAll(Iterable.castFrom(jsonDecode(colors)));
+      print('inside !! null');
+    } else {
+      List<String> coolors = [];
+      for (var i = 0; i < 6; i++) {
+        String _color = returnRandomHex();
+        _colorsList.add(_color);
+        coolors.add(_color);
+      }
+      box.put('colors', jsonEncode(coolors));
+    }
+    _notify();
+    print(colors);
+    print(_colorsList);
   }
 
   @override
@@ -111,25 +126,6 @@ class _HomeState extends State<Home> {
                       child: ListTile(
                         tileColor: _color,
                         hoverColor: _color.darken(5),
-                        trailing: IconButton(
-                          icon: Icon(
-                            _lockedColorsList.contains(_colorsList[index])
-                                ? Icons.lock
-                                : Icons.lock_open,
-                          ),
-                          color: _color.isDark
-                              ? _color.lighten(20)
-                              : _color.darken(20),
-                          onPressed: () {
-                            if (_lockedColorsList
-                                .contains(_colorsList[index])) {
-                              _lockedColorsList.remove(_colorsList[index]);
-                            } else {
-                              _lockedColorsList.add(_colorsList[index]);
-                            }
-                            if (mounted) _notify();
-                          },
-                        ),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -139,11 +135,36 @@ class _HomeState extends State<Home> {
                         title: Container(
                           height: _colorHeight,
                           alignment: Alignment.centerLeft,
-                          child: Text(
-                            _colorsList[index].toUpperCase(),
-                            style: TextStyle(
-                              color: _textColor,
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                _colorsList[index].toUpperCase(),
+                                style: TextStyle(
+                                  color: _textColor,
+                                ),
+                              ),
+                              IconButton(
+                                icon: Icon(
+                                  _lockedColorsList.contains(_colorsList[index])
+                                      ? Icons.lock
+                                      : Icons.lock_open,
+                                ),
+                                color: _color.isDark
+                                    ? _color.lighten(20)
+                                    : _color.darken(20),
+                                onPressed: () {
+                                  if (_lockedColorsList
+                                      .contains(_colorsList[index])) {
+                                    _lockedColorsList
+                                        .remove(_colorsList[index]);
+                                  } else {
+                                    _lockedColorsList.add(_colorsList[index]);
+                                  }
+                                  if (mounted) _notify();
+                                },
+                              ),
+                            ],
                           ),
                         ),
                       ),

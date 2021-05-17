@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -7,6 +8,7 @@ import 'package:rainbow/screens/color.dart';
 import 'package:rainbow/screens/settings.dart';
 import 'package:rainbow/utility/page_transition.dart';
 import 'package:tinycolor/tinycolor.dart';
+import 'package:rainbow/utility/helpers.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -25,13 +27,10 @@ class _HomeState extends State<Home> {
   }
 
   _getInitColors() async {
-    var box = await Hive.openBox('data');
-    String? colors = box.get('colors');
-    print(colors);
+    var box = await Hive.openBox('colors');
+    String? colors = box.get('data');
     if (colors != null) {
-      print('inside ! null');
       _colorsList.addAll(Iterable.castFrom(jsonDecode(colors)));
-      print('inside !! null');
     } else {
       List<String> coolors = [];
       for (var i = 0; i < 6; i++) {
@@ -39,11 +38,9 @@ class _HomeState extends State<Home> {
         _colorsList.add(_color);
         coolors.add(_color);
       }
-      box.put('colors', jsonEncode(coolors));
+      box.put('data', jsonEncode(coolors));
     }
     _notify();
-    print(colors);
-    print(_colorsList);
   }
 
   @override
@@ -74,8 +71,7 @@ class _HomeState extends State<Home> {
                 children: List.generate(_colorsList.length, (index) {
                   final Color _color =
                       Color(int.parse('0xFF' + _colorsList[index]));
-                  final Color _textColor =
-                      TinyColor(_color).isDark() ? Colors.white : Colors.black;
+                  final Color _textColor = TinyColor(_color).textColor();
                   return Dismissible(
                     key: Key(_colorsList[index]),
                     confirmDismiss: (DismissDirection direction) {
@@ -103,8 +99,8 @@ class _HomeState extends State<Home> {
                       child: Icon(
                         _lockedColorsList.contains(_colorsList[index])
                             ? Icons.lock_open
-                            : Icons.lock_outline,
-                        color: Colors.white,
+                            : Icons.lock,
+                        color: _color.textColor(),
                         size: 32,
                       ),
                     ),
@@ -114,7 +110,7 @@ class _HomeState extends State<Home> {
                       padding: EdgeInsets.symmetric(horizontal: 24),
                       child: Icon(
                         Icons.remove_circle_outline,
-                        color: Colors.white,
+                        color: _color.textColor(),
                         size: 32,
                       ),
                     ),
@@ -142,6 +138,10 @@ class _HomeState extends State<Home> {
                                 _colorsList[index].toUpperCase(),
                                 style: TextStyle(
                                   color: _textColor,
+                                  fontSize: 16,
+                                  fontFeatures: [
+                                    FontFeature.tabularFigures(),
+                                  ],
                                 ),
                               ),
                               IconButton(

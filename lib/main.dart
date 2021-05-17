@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'package:rainbow/screens/color.dart';
 import 'package:rainbow/screens/home.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -72,7 +73,10 @@ class MyApp extends StatelessWidget {
       // ),
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.light,
-      home: Home(),
+      // home: Home(),
+      home: ColorScreen(
+        color: Color(0xFF2339A4),
+      ),
     );
   }
 }

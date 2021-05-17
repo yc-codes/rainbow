@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:rainbow/widgets/text_detail.dart';
 import 'package:tinycolor/tinycolor.dart';
 import 'package:rainbow/utility/helpers.dart';
 
@@ -32,55 +33,66 @@ class _ColorScreenState extends State<ColorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: widget.color,
+        // backgroundColor: widget.color,
         title: Text(
-          widget.color.toHex(),
+          'View Color',
           style: TextStyle(
-            color: widget.color.textColor(),
+            color: Colors.black,
           ),
         ),
-        iconTheme: IconThemeData(
-          color: widget.color.textColor(),
-        ),
+        // iconTheme: IconThemeData(
+        //   color: widget.color.textColor(),
+        // ),
         centerTitle: true,
       ),
       body: Container(
         constraints: BoxConstraints(),
-        child: ListView.builder(
-          itemCount: colorsList.length,
-          padding: EdgeInsets.symmetric(vertical: 8),
-          itemBuilder: (BuildContext context, int index) {
-            TinyColor color = colorsList[index];
-            return Container(
-              height: 100,
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              color: color.color,
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    color.color.toHex(),
-                    style: TextStyle(
-                      color: color.textColor(),
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.copy),
-                    iconSize: 20,
-                    color: color.textColor().withOpacity(0.6),
-                    onPressed: () => Clipboard.setData(
-                      ClipboardData(
-                        text: color.color.toHex(leadingHashSign: true),
+        child: ListView(
+          children: [
+            TextDetailView(
+              title: 'HEX',
+              text: widget.color.toHex(),
+              color: widget.color,
+            ),
+            ListView.builder(
+              itemCount: colorsList.length,
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.symmetric(vertical: 8),
+              itemBuilder: (BuildContext context, int index) {
+                TinyColor color = colorsList[index];
+                return Container(
+                  height: 100,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  color: color.color,
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        color.color.toHex(),
+                        style: TextStyle(
+                          color: color.textColor(),
+                        ),
                       ),
-                    ),
+                      IconButton(
+                        icon: Icon(Icons.copy),
+                        iconSize: 20,
+                        color: color.textColor().withOpacity(0.6),
+                        onPressed: () => Clipboard.setData(
+                          ClipboardData(
+                            text: color.color.toHex(leadingHashSign: true),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          },
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

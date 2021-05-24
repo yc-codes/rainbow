@@ -54,6 +54,11 @@ class _ColorScreenState extends State<ColorScreen> {
               text: widget.color.toHex(),
               color: widget.color,
             ),
+            TextDetailView(
+              title: 'RGB',
+              text: widget.color.toHex().toString(),
+              color: widget.color,
+            ),
             ListView.builder(
               itemCount: colorsList.length,
               physics: NeverScrollableScrollPhysics(),

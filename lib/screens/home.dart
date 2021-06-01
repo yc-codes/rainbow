@@ -137,8 +137,9 @@ class _HomeState extends State<Home> {
                               Text(
                                 _colorsList[index].toUpperCase(),
                                 style: TextStyle(
-                                  color: _textColor,
+                                  color: _textColor.withOpacity(0.7),
                                   fontSize: 16,
+                                  fontWeight: FontWeight.w500,
                                   fontFeatures: [
                                     FontFeature.tabularFigures(),
                                   ],

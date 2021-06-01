@@ -36,9 +36,6 @@ class _ColorScreenState extends State<ColorScreen> {
         // backgroundColor: widget.color,
         title: Text(
           'View Color',
-          style: TextStyle(
-            color: Colors.black,
-          ),
         ),
         // iconTheme: IconThemeData(
         //   color: widget.color.textColor(),

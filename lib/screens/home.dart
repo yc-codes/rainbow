@@ -137,7 +137,7 @@ class _HomeState extends State<Home> {
                               Text(
                                 _colorsList[index].toUpperCase(),
                                 style: TextStyle(
-                                  color: _textColor.withOpacity(0.7),
+                                  color: _textColor,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                   fontFeatures: [
@@ -179,7 +179,9 @@ class _HomeState extends State<Home> {
               height: _bottomBarHeight,
               decoration: BoxDecoration(
                 border: Border(
-                  top: BorderSide(color: Colors.grey.shade300),
+                  top: BorderSide(
+                    color: Theme.of(context).dividerColor,
+                  ),
                 ),
               ),
               child: Row(
@@ -194,7 +196,7 @@ class _HomeState extends State<Home> {
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: Icon(
                         Icons.settings_outlined,
-                        color: Colors.black54,
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                         size: 30,
                       ),
                     ),
@@ -207,7 +209,7 @@ class _HomeState extends State<Home> {
                         child: Text(
                           'Generate',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Theme.of(context).textTheme.bodyText1!.color,
                             fontSize: 18,
                             fontWeight: FontWeight.normal,
                           ),
@@ -224,7 +226,7 @@ class _HomeState extends State<Home> {
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: Icon(
                         Icons.add,
-                        color: Colors.black54,
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                         size: 30,
                       ),
                     ),

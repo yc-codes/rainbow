@@ -43,38 +43,56 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.white,
         primarySwatch: Colors.blue,
+        dividerColor: Colors.grey.shade300,
+        textTheme: TextTheme(
+          bodyText1: TextStyle(
+            color: Colors.black,
+          ),
+        ),
       ),
-      // darkTheme: ThemeData(
-      //   outlinedButtonTheme: OutlinedButtonThemeData(
-      //     style: ButtonStyle(
-      //       padding: MaterialStateProperty.all<EdgeInsets>(
-      //         EdgeInsets.all(0),
-      //       ),
-      //       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      //       minimumSize: MaterialStateProperty.all<Size>(Size.zero),
-      //       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-      //         RoundedRectangleBorder(
-      //           borderRadius: BorderRadius.circular(12.5),
-      //           side: BorderSide(color: Colors.red),
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      //   appBarTheme: AppBarTheme(
-      //     systemOverlayStyle: SystemUiOverlayStyle.light,
-      //     backgroundColor: Colors.grey.shade900,
-      //     brightness: Brightness.dark,
-      //   ),
-      //   scaffoldBackgroundColor: Colors.black,
-      //   primarySwatch: Colors.blue,
-      //   splashFactory: MaterialInkSplash.splashFactory,
-      // ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        fontFamily: 'Inter',
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: ButtonStyle(
+            padding: MaterialStateProperty.all<EdgeInsets>(
+              EdgeInsets.all(0),
+            ),
+            backgroundColor:
+                MaterialStateProperty.all<Color>(Colors.grey.shade900),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            minimumSize: MaterialStateProperty.all<Size>(Size.zero),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.5),
+              ),
+            ),
+          ),
+        ),
+        textTheme: TextTheme(
+          bodyText1: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        appBarTheme: AppBarTheme(
+          brightness: Brightness.dark,
+          color: Colors.grey.shade900,
+          elevation: 1,
+          centerTitle: true,
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        dividerColor: Colors.grey.shade700,
+        scaffoldBackgroundColor: Colors.grey.shade900,
+        primarySwatch: Colors.blue,
+      ),
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       home: Home(),
-      // home: ColorScreen(
-      //   color: Color(0xFF2339A4),
-      // ),
     );
   }
 }

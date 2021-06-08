@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rainbow/screens/home.dart';
+import 'package:rainbow/screens/settings.dart';
 import 'package:rainbow/temp/animation.dart';
 
 void main() async {
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        highlightColor: Colors.transparent,
         appBarTheme: AppBarTheme(
           brightness: Brightness.light,
           color: Colors.white,
@@ -48,6 +50,14 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           bodyText1: TextStyle(
             color: Colors.black,
+          ),
+          headline6: TextStyle(
+            color: Colors.black,
+            fontSize: 14,
+          ),
+          subtitle1: TextStyle(
+            color: Colors.grey,
+            fontSize: 8,
           ),
         ),
       ),
@@ -74,7 +84,18 @@ class MyApp extends StatelessWidget {
           bodyText1: TextStyle(
             color: Colors.white,
           ),
+          headline6: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w300,
+            fontSize: 16,
+          ),
+          subtitle1: TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.w300,
+            fontSize: 14,
+          ),
         ),
+        highlightColor: Colors.transparent,
         appBarTheme: AppBarTheme(
           brightness: Brightness.dark,
           color: Colors.grey.shade900,
@@ -92,7 +113,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.dark,
       home: Home(),
       // home: OpenContainerTransformDemo(),
     );

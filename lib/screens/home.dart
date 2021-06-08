@@ -126,6 +126,9 @@ class _HomeState extends State<Home> {
                       tappable: true,
                       closedShape: const RoundedRectangleBorder(),
                       closedElevation: 0.0,
+                      closedColor: _color,
+                      middleColor: _color,
+                      openColor: Theme.of(context).scaffoldBackgroundColor,
                       closedBuilder:
                           (BuildContext _, VoidCallback openContainer) {
                         return Container(
@@ -215,8 +218,8 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: OutlinedButton(
                         onPressed: _refreshColors,
                         child: Text(
@@ -226,6 +229,22 @@ class _HomeState extends State<Home> {
                             fontSize: 18,
                             fontWeight: FontWeight.normal,
                           ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: OutlinedButton(
+                      onPressed: () {
+                        print("asdasd");
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        child: Icon(
+                          Icons.image,
+                          color: Theme.of(context).textTheme.bodyText1!.color,
+                          size: 30,
                         ),
                       ),
                     ),

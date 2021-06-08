@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rainbow/screens/home.dart';
-import 'package:rainbow/screens/settings.dart';
-import 'package:rainbow/temp/animation.dart';
 
 void main() async {
   await Hive.initFlutter();

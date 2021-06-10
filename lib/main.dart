@@ -6,6 +6,9 @@ import 'package:rainbow/screens/home.dart';
 
 void main() async {
   await Hive.initFlutter();
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+  );
   runApp(MyApp());
 }
 
@@ -84,12 +87,12 @@ class MyApp extends StatelessWidget {
           ),
           headline6: TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.w300,
+            // fontWeight: FontWeight.w300,
             fontSize: 16,
           ),
           subtitle1: TextStyle(
             color: Colors.grey,
-            fontWeight: FontWeight.w300,
+            // fontWeight: FontWeight.w300,
             fontSize: 14,
           ),
         ),
@@ -111,7 +114,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.system,
       home: Home(),
       // home: OpenContainerTransformDemo(),
     );

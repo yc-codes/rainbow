@@ -56,11 +56,17 @@ class _ColorScreenState extends State<ColorScreen> {
               text: widget.color.toRGBString(),
               color: widget.color,
             ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 24, 0, 12),
+              child: Text(
+                "Shades",
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ),
             ListView.builder(
               itemCount: colorsList.length,
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              padding: EdgeInsets.symmetric(vertical: 8),
               itemBuilder: (BuildContext context, int index) {
                 TinyColor color = colorsList[index];
                 return Container(
@@ -68,7 +74,6 @@ class _ColorScreenState extends State<ColorScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   color: color.color,
                   alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
                   width: double.infinity,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

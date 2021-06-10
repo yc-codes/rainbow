@@ -44,13 +44,19 @@ class TextDetailView extends StatelessWidget {
               ],
             ),
           ),
-          IconButton(
-            icon: Icon(Icons.copy),
-            iconSize: 20,
-            color: color.textColor().withOpacity(0.6),
-            onPressed: () => Clipboard.setData(
-              ClipboardData(
-                text: text,
+          Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(8),
+            borderOnForeground: false,
+            child: IconButton(
+              icon: Icon(Icons.copy),
+              iconSize: 20,
+              color: color.textColor().withOpacity(0.6),
+              tooltip: "Copy",
+              onPressed: () => Clipboard.setData(
+                ClipboardData(
+                  text: text,
+                ),
               ),
             ),
           ),

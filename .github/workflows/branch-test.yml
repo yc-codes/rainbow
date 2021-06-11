@@ -3,7 +3,7 @@ name: Flutter CI
 on:
   push:
     branches:
-    - master
+    - test
     
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
       with:
         flutter-version: '2.0.6'
     - run: flutter pub get
-    - run: flutter build apk --release
+    - run: flutter build apk
     
     - uses: actions/upload-artifact@v1
       with:

@@ -4,13 +4,13 @@ import 'dart:ui';
 
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:rainbow/screens/color.dart';
 import 'package:rainbow/screens/settings.dart';
+import 'package:rainbow/utility/helpers.dart';
 import 'package:rainbow/utility/hive_helpers.dart';
 import 'package:rainbow/utility/page_transition.dart';
+import 'package:rainbow/widgets/bottom_bar.dart';
 import 'package:tinycolor/tinycolor.dart';
-import 'package:rainbow/utility/helpers.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -55,54 +55,12 @@ class _HomeState extends State<Home> {
         _colorsList.length;
 
     return Scaffold(
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        height: _bottomBarHeight,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            OutlinedButton(
-              onPressed: () {
-                Navigator.of(context).push(goToScreen(Settings()));
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Icon(
-                  Icons.settings_outlined,
-                  color: Theme.of(context).textTheme.bodyText1!.color,
-                  size: 30,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: OutlinedButton(
-                  onPressed: _refreshColors,
-                  child: Text(
-                    'Generate',
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.bodyText1!.color,
-                      fontSize: 18,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            OutlinedButton(
-              onPressed: addColorToList,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: Icon(
-                  Icons.add,
-                  color: Theme.of(context).textTheme.bodyText1!.color,
-                  size: 30,
-                ),
-              ),
-            ),
-          ],
-        ),
+      bottomNavigationBar: BottomBar(
+        onInfoClick: () {
+          Navigator.of(context).push(goToScreen(Settings()));
+        },
+        onGenerateClick: _refreshColors,
+        onPlusClick: addColorToList,
       ),
       body: SafeArea(
         child: Container(
@@ -155,10 +113,14 @@ class _HomeState extends State<Home> {
                   hiveSaveColors(_colorsList);
                   _notify();
                 },
-                background: Container(
+                background: AnimatedContainer(
                   color: _color.darken(6),
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.symmetric(horizontal: 24),
+                  curve: Curves.easeOutExpo,
+                  duration: Duration(
+                    milliseconds: 200,
+                  ),
                   child: Icon(
                     _lockedColorsList.contains(_colorsList[index])
                         ? Icons.lock_open

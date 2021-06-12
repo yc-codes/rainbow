@@ -80,6 +80,37 @@ class BottomBar extends StatelessWidget {
     );
   }
 
+  saveToFavorite(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        insetPadding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
+        title: Text('Save Palette'),
+        content: const TextField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Palette Name',
+          ),
+        ),
+        actions: [
+          OutlinedButton(
+            onPressed: () async {
+              await hiveSaveFavoritePalette("A2z", colorsList);
+            },
+            child: Text(
+              'Save',
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodyText1!.color,
+                fontSize: 18,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   bottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -97,9 +128,8 @@ class BottomBar extends StatelessWidget {
             children: <Widget>[
               BottomSheetItem(
                 icon: Icons.favorite_border_rounded,
-                onClick: () async {
-                  print("click colors add");
-                  await hiveSaveFavoritePalette("A2z", colorsList);
+                onClick: () {
+                  saveToFavorite(context);
                 },
                 text: "Save to Favorites",
               ),

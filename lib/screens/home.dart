@@ -10,6 +10,7 @@ import 'package:rainbow/utility/helpers.dart';
 import 'package:rainbow/utility/hive_helpers.dart';
 import 'package:rainbow/utility/page_transition.dart';
 import 'package:rainbow/widgets/bottom_bar.dart';
+import 'package:rainbow/widgets/snackbar.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class Home extends StatefulWidget {
@@ -56,11 +57,9 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       bottomNavigationBar: BottomBar(
-        onInfoClick: () {
-          Navigator.of(context).push(goToScreen(Settings()));
-        },
         onGenerateClick: _refreshColors,
         onPlusClick: addColorToList,
+        colorsList: _colorsList,
       ),
       body: SafeArea(
         child: Container(
@@ -94,7 +93,7 @@ class _HomeState extends State<Home> {
                   }
 
                   if (_colorsList.length == minColorLength) {
-                    final snackBar = SnackBar(
+                    final snackBar = AppSnackBar(
                       content: Text('You can\'t remove any more colors'),
                       action: SnackBarAction(
                         label: 'OKAY',
@@ -214,7 +213,7 @@ class _HomeState extends State<Home> {
 
   void addColorToList() {
     if (_colorsList.length == maxColorLength) {
-      final snackBar = SnackBar(
+      final snackBar = AppSnackBar(
         content: Text('You can\'t add more colors'),
         action: SnackBarAction(
           label: 'OKAY',

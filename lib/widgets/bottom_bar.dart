@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:rainbow/model/favorite.dart';
+import 'package:rainbow/screens/favorites.dart';
+import 'package:rainbow/screens/settings.dart';
+import 'package:rainbow/utility/hive_helpers.dart';
+import 'package:rainbow/utility/page_transition.dart';
+import 'package:rainbow/widgets/bottom_sheet_item.dart';
+import 'package:rainbow/widgets/snackbar.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({
     Key? key,
     required this.onGenerateClick,
     required this.onPlusClick,
-    required this.onInfoClick,
+    required this.colorsList,
   }) : super(key: key);
+
   final double _bottomBarHeight = 60;
   final void Function() onGenerateClick;
   final void Function() onPlusClick;
-  final void Function() onInfoClick;
+  final List<String> colorsList;
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +30,13 @@ class BottomBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           OutlinedButton(
-            onPressed: onInfoClick,
+            onPressed: () {
+              bottomSheet(context);
+            },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 8),
               child: Icon(
-                Icons.settings_outlined,
+                Icons.more_horiz_rounded,
                 color: Theme.of(context).textTheme.bodyText1!.color,
                 size: 30,
               ),
@@ -60,6 +71,73 @@ class BottomBar extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  SnackBar comingSoonSnackBar(context) {
+    return AppSnackBar(
+      content: Text('Coming Soon'),
+    );
+  }
+
+  bottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(16),
+          topRight: const Radius.circular(16),
+        ),
+      ),
+      builder: (_) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 22),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              BottomSheetItem(
+                icon: Icons.favorite_border_rounded,
+                onClick: () async {
+                  print("click colors add");
+                  await hiveSaveFavoritePalette("A2z", colorsList);
+                },
+                text: "Save to Favorites",
+              ),
+              BottomSheetItem(
+                icon: Icons.share,
+                onClick: () async {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(comingSoonSnackBar(context));
+                },
+                text: "Share Palette",
+              ),
+              BottomSheetItem(
+                icon: Icons.favorite_rounded,
+                onClick: () async {
+                  Navigator.push(context, goToScreen(FavoritesScreen()));
+                },
+                text: "Favorites",
+              ),
+              BottomSheetItem(
+                icon: Icons.image,
+                onClick: () {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(comingSoonSnackBar(context));
+                },
+                text: "Generate Palette from Image",
+              ),
+              BottomSheetItem(
+                icon: Icons.settings,
+                onClick: () {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(comingSoonSnackBar(context));
+                },
+                text: "Settings",
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

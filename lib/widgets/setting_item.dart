@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SettingItem extends StatelessWidget {
+class SettingListItem extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
   final Color color;
 
-  const SettingItem({
+  const SettingListItem({
     Key? key,
     required this.icon,
     required this.title,

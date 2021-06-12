@@ -36,10 +36,8 @@ class _ColorScreenState extends State<ColorScreen> {
         // backgroundColor: widget.color,
         title: Text(
           'View Color',
+          style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
-        // iconTheme: IconThemeData(
-        //   color: widget.color.textColor(),
-        // ),
         centerTitle: true,
       ),
       body: Container(

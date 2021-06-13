@@ -22,8 +22,8 @@ class BottomSheetItem extends StatelessWidget {
       ),
       horizontalTitleGap: 0,
       onTap: () {
-        Navigator.pop(context);
         onClick();
+        Navigator.pop(context);
       },
     );
   }

@@ -5,6 +5,7 @@ import 'package:rainbow/utility/page_transition.dart';
 import 'package:rainbow/widgets/bottom_sheet_item.dart';
 import 'package:rainbow/widgets/dialog.dart' as App;
 import 'package:rainbow/widgets/snackbar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({
@@ -201,13 +202,24 @@ class BottomBar extends StatelessWidget {
                 text: "Generate Palette from Image",
               ),
               BottomSheetItem(
-                icon: Icons.settings,
-                onClick: () {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(comingSoonSnackBar(context));
+                icon: Icons.upcoming,
+                onClick: () async {
+                  String _url =
+                      "https://github.com/yc-codes/rainbow/blob/master/README.md#upcoming-features";
+                  await canLaunch(_url)
+                      ? await launch(_url)
+                      : throw 'Could not launch $_url';
                 },
-                text: "Settings",
+                text: "Upcoming Features",
               ),
+              // BottomSheetItem(
+              //   icon: Icons.settings,
+              //   onClick: () {
+              //     ScaffoldMessenger.of(context)
+              //         .showSnackBar(comingSoonSnackBar(context));
+              //   },
+              //   text: "Settings",
+              // ),
             ],
           ),
         );

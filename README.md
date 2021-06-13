@@ -2,8 +2,13 @@
 
 ### Upcoming Features
 
+- [ ] Load Pallete from Favorites
+- [ ] Dark Light Theme Switch
+- [ ] Backup Palettes
 - [ ] Settings to Update Shades, Color Scheme, Theme, and more
 - [ ] Share & Export Palette Options
 - [ ] Image Color Picker with Palette Generator
 - [ ] Language Support
 - [ ] Feature Requests
+
+### How to use

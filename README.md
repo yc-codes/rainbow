@@ -12,3 +12,9 @@
 - [ ] Feature Requests
 
 ### How to use
+- Swipe Left on Color to Remove
+- Swipe Right on Color to Lock 
+- Click and Hold to Organize Colors
+- Click on color to see Shades and more info
+- `Save to Favorite` to Save Palette to Favorites 
+- `Favorites` contain List of Favorite Palettes

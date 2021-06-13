@@ -159,6 +159,7 @@ class BottomBar extends StatelessWidget {
   bottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: const Radius.circular(16),

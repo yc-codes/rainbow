@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:rainbow/model/favorite.dart';
 import 'package:rainbow/screens/favorites.dart';
-import 'package:rainbow/screens/settings.dart';
 import 'package:rainbow/utility/hive_helpers.dart';
 import 'package:rainbow/utility/page_transition.dart';
 import 'package:rainbow/widgets/bottom_sheet_item.dart';
+import 'package:rainbow/widgets/dialog.dart' as App;
 import 'package:rainbow/widgets/snackbar.dart';
 
 class BottomBar extends StatelessWidget {
@@ -81,28 +79,74 @@ class BottomBar extends StatelessWidget {
   }
 
   saveToFavorite(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+
+    TextEditingController _nameController = TextEditingController();
+
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        insetPadding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
-        title: Text('Save Palette'),
-        content: const TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'Palette Name',
+      builder: (_) => App.AppAlertDialog(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        insetPadding: EdgeInsets.zero,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        titlePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        buttonPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        title: Container(
+          padding: const EdgeInsets.only(top: 8),
+          child: Text(
+            'Palette',
+            style: Theme.of(context).textTheme.headline5,
           ),
         ),
-        actions: [
-          OutlinedButton(
-            onPressed: () async {
-              await hiveSaveFavoritePalette("A2z", colorsList);
+        content: Form(
+          key: _formKey,
+          child: TextFormField(
+            controller: _nameController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter palette name';
+              }
+              return null;
             },
-            child: Text(
-              'Save',
-              style: TextStyle(
-                color: Theme.of(context).textTheme.bodyText1!.color,
-                fontSize: 18,
-                fontWeight: FontWeight.normal,
+            decoration: InputDecoration(
+              labelText: 'Palette Name',
+            ),
+          ),
+        ),
+        actionsPadding: const EdgeInsets.symmetric(horizontal: 0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        actions: [
+          Container(
+            width: double.infinity,
+            child: OutlinedButton(
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  await hiveSaveFavoritePalette(
+                    _nameController.text.trim(),
+                    colorsList,
+                  );
+                  var snackBar = AppSnackBar(
+                    content: Text('Pelette added to Favorites'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  Navigator.pop(context);
+                }
+              },
+              style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                      const EdgeInsets.symmetric(vertical: 10),
+                    ),
+                  ),
+              child: Text(
+                'Save',
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyText1!.color,
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
             ),
           ),

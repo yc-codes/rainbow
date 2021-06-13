@@ -79,6 +79,11 @@ class AppThemes {
         ),
       ),
     ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(6),
+      ),
+    ),
     textTheme: TextTheme(
       bodyText1: TextStyle(
         color: Colors.white,

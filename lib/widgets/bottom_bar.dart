@@ -212,6 +212,17 @@ class BottomBar extends StatelessWidget {
                 },
                 text: "Upcoming Features",
               ),
+              BottomSheetItem(
+                icon: Icons.help_outline,
+                onClick: () async {
+                  String _url =
+                      "https://github.com/yc-codes/rainbow/blob/master/README.md#how-to-use";
+                  await canLaunch(_url)
+                      ? await launch(_url)
+                      : throw 'Could not launch $_url';
+                },
+                text: "How to use",
+              ),
               // BottomSheetItem(
               //   icon: Icons.settings,
               //   onClick: () {

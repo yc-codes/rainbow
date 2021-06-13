@@ -1,4 +1,4 @@
-package com.example.rainbow
+package dev.bsteps.rainbow
 
 import io.flutter.embedding.android.FlutterActivity
 

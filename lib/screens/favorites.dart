@@ -36,6 +36,16 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            tooltip: "Backup Palettes",
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            icon: Icon(
+              Icons.backup,
+            ),
+          )
+        ],
       ),
       body: Container(
         constraints: BoxConstraints(),

@@ -2,7 +2,7 @@
 
 ### Upcoming Features
 
-- [ ] Load Pallete from Favorites
+- [ ] Load Pallets from Favorites
 - [ ] Dark Light Theme Switch
 - [ ] Backup Palettes
 - [ ] Settings to Update Shades, Color Scheme, Theme, and more

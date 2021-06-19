@@ -1,0 +1,11 @@
+{
+    "@@locale": "en",
+    "counterAppBarTitle": "Counter",
+    "@counterAppBarTitle": {
+        "description": "Text shown in the AppBar of the Counter Page"
+    },
+    "noMoreColors": "No More Colors",
+    "ok": "OK",
+    "upcomingFeaturesUrl": "https://www.notion.so/Upcoming-Features-4a472f99aaa7438893730d5b0f0b4649",
+    "howToUseUrl": "https://www.notion.so/How-to-use-f8cf208644d547f9ac32b33fcdae04fd"
+}

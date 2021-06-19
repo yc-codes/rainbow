@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rainbow/model/favorite.dart';
-import 'package:rainbow/utility/hive_helpers.dart';
+import 'package:rainbow/data/models/favorite.dart';
+
+import 'package:rainbow/utility/helpers/hive.dart';
 
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   }
 
   getPalettes() async {
-    paletteList = await hiveGiveFavoritePalettes();
+    paletteList = await AppHive.favorites.get();
     _notify();
   }
 

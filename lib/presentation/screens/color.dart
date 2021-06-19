@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:rainbow/widgets/text_detail.dart';
+import 'package:rainbow/presentation/widgets/text_detail.dart';
 import 'package:tinycolor/tinycolor.dart';
-import 'package:rainbow/utility/helpers.dart';
+import 'package:rainbow/utility/extensions/colors.dart';
 
 class ColorScreen extends StatefulWidget {
   final Color color;

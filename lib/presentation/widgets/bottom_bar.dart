@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:rainbow/screens/favorites.dart';
-import 'package:rainbow/utility/hive_helpers.dart';
-import 'package:rainbow/utility/page_transition.dart';
-import 'package:rainbow/widgets/bottom_sheet_item.dart';
-import 'package:rainbow/widgets/dialog.dart' as App;
-import 'package:rainbow/widgets/snackbar.dart';
+import 'package:rainbow/constants/app_urls.dart';
+import 'package:rainbow/presentation/screens/favorites.dart';
+import 'package:rainbow/presentation/widgets/dialog.dart' as App;
+import 'package:rainbow/presentation/widgets/snackbar.dart';
+import 'package:rainbow/utility/helpers/hive.dart';
+import 'package:rainbow/utility/transitions/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'bottom_sheet_item.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({
@@ -125,7 +127,7 @@ class BottomBar extends StatelessWidget {
             child: OutlinedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  await hiveSaveFavoritePalette(
+                  await AppHive.favorites.put(
                     _nameController.text.trim(),
                     colorsList,
                   );
@@ -205,8 +207,7 @@ class BottomBar extends StatelessWidget {
               BottomSheetItem(
                 icon: Icons.upcoming,
                 onClick: () async {
-                  String _url =
-                      "https://github.com/yc-codes/rainbow/blob/master/README.md#upcoming-features";
+                  String _url = AppURLs.upcomingFeatures;
                   await canLaunch(_url)
                       ? await launch(_url)
                       : throw 'Could not launch $_url';
@@ -216,8 +217,7 @@ class BottomBar extends StatelessWidget {
               BottomSheetItem(
                 icon: Icons.help_outline,
                 onClick: () async {
-                  String _url =
-                      "https://github.com/yc-codes/rainbow/blob/master/README.md#how-to-use";
+                  String _url = AppURLs.howToUse;
                   await canLaunch(_url)
                       ? await launch(_url)
                       : throw 'Could not launch $_url';

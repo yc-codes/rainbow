@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:rainbow/model/favorite.dart';
-import 'package:rainbow/screens/home.dart';
-import 'package:rainbow/utility/themes.dart';
+import 'package:rainbow/presentation/screens/home.dart';
+import 'package:rainbow/constants/themes.dart';
+
+import 'data/models/favorite.dart';
 
 void main() async {
   await Hive.initFlutter();

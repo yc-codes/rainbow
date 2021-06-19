@@ -4,13 +4,12 @@ import 'dart:ui';
 
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:rainbow/screens/color.dart';
-import 'package:rainbow/screens/settings.dart';
-import 'package:rainbow/utility/helpers.dart';
-import 'package:rainbow/utility/hive_helpers.dart';
-import 'package:rainbow/utility/page_transition.dart';
-import 'package:rainbow/widgets/bottom_bar.dart';
-import 'package:rainbow/widgets/snackbar.dart';
+import 'package:rainbow/constants/app_strings.dart';
+import 'package:rainbow/presentation/screens/color.dart';
+import 'package:rainbow/presentation/widgets/bottom_bar.dart';
+import 'package:rainbow/presentation/widgets/snackbar.dart';
+import 'package:rainbow/utility/extensions/colors.dart';
+import 'package:rainbow/utility/helpers/hive.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class Home extends StatefulWidget {
@@ -33,16 +32,8 @@ class _HomeState extends State<Home> {
   }
 
   _getInitColors() async {
-    String? colors = await hiveGiveColors();
-    if (colors != null) {
-      _colorsList.addAll(Iterable.castFrom(jsonDecode(colors)));
-    } else {
-      for (var i = 0; i < 6; i++) {
-        String _color = returnRandomHex();
-        _colorsList.add(_color);
-      }
-      hiveSaveColors(_colorsList);
-    }
+    String colors = await AppHive.home.get();
+    _colorsList.addAll(Iterable.castFrom(jsonDecode(colors)));
     _notify();
   }
 
@@ -109,7 +100,7 @@ class _HomeState extends State<Home> {
                 onDismissed: (DismissDirection direction) {
                   _lockedColorsList.remove(_colorsList[index]);
                   _colorsList.removeAt(index);
-                  hiveSaveColors(_colorsList);
+                  AppHive.home.put(_colorsList);
                   _notify();
                 },
                 background: AnimatedContainer(
@@ -214,9 +205,9 @@ class _HomeState extends State<Home> {
   void addColorToList() {
     if (_colorsList.length == maxColorLength) {
       final snackBar = AppSnackBar(
-        content: Text('You can\'t add more colors'),
+        content: Text(AppStrings.no_more_colors),
         action: SnackBarAction(
-          label: 'OKAY',
+          label: AppStrings.okay,
           onPressed: () => {},
         ),
       );
@@ -224,7 +215,7 @@ class _HomeState extends State<Home> {
       return;
     }
     _colorsList.add(returnRandomHex());
-    hiveSaveColors(_colorsList);
+    AppHive.home.put(_colorsList);
     _notify();
   }
 
@@ -233,7 +224,7 @@ class _HomeState extends State<Home> {
       if (_lockedColorsList.contains(_colorsList[i])) continue;
       _colorsList[i] = returnRandomHex();
     }
-    hiveSaveColors(_colorsList);
+    AppHive.home.put(_colorsList);
     _notify();
   }
 

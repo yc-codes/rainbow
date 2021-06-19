@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rainbow/utility/hive_helpers.dart';
-import 'package:rainbow/widgets/setting_item.dart';
+import 'package:rainbow/presentation/widgets/setting_item.dart';
 
 class Settings extends StatefulWidget {
   @override

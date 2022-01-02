@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppSnackBar extends SnackBar {
+  @override
   final Widget content;
+  @override
   final SnackBarAction? action;
 
-  AppSnackBar({
+  const AppSnackBar({
     required this.content,
     this.action,
   }) : super(

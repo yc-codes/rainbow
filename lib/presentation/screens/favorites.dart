@@ -19,12 +19,12 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     super.initState();
   }
 
-  getPalettes() async {
+  void getPalettes() async {
     paletteList = await AppHive.favorites.get();
     _notify();
   }
 
-  _notify() {
+  void _notify() {
     if (mounted) setState(() {});
   }
 
@@ -40,16 +40,16 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         actions: [
           IconButton(
             onPressed: () {},
-            tooltip: "Backup Palettes",
+            tooltip: 'Backup Palettes',
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            icon: Icon(
+            icon: const Icon(
               Icons.backup,
             ),
           )
         ],
       ),
       body: Container(
-        constraints: BoxConstraints(),
+        constraints: const BoxConstraints(),
         child: ListView.builder(
           itemCount: paletteList.length,
           itemBuilder: (BuildContext context, int index) {
@@ -63,29 +63,22 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 child: Row(
                   children: [
                     ...paletteList[index].colors.asMap().entries.map((element) {
-                      bool first = element.key == 0;
-                      bool last =
-                          element.key == (paletteList[index].colors.length - 1);
+                      final first = element.key == 0;
+                      final last = element.key == (paletteList[index].colors.length - 1);
                       return Flexible(
+                        fit: FlexFit.tight,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Color(int.parse('0xFF' + element.value)),
+                            color: Color(int.parse('0xFF${element.value}')),
                             borderRadius: BorderRadius.only(
-                              topLeft: first
-                                  ? const Radius.circular(8)
-                                  : Radius.zero,
-                              bottomLeft: first
-                                  ? const Radius.circular(8)
-                                  : Radius.zero,
-                              topRight:
-                                  last ? const Radius.circular(8) : Radius.zero,
-                              bottomRight:
-                                  last ? const Radius.circular(8) : Radius.zero,
+                              topLeft: first ? const Radius.circular(8) : Radius.zero,
+                              bottomLeft: first ? const Radius.circular(8) : Radius.zero,
+                              topRight: last ? const Radius.circular(8) : Radius.zero,
+                              bottomRight: last ? const Radius.circular(8) : Radius.zero,
                             ),
                           ),
                           height: 40,
                         ),
-                        fit: FlexFit.tight,
                       );
                     }),
                   ],

@@ -7,7 +7,7 @@ class TextDetailView extends StatelessWidget {
   final String text;
   final Color color;
 
-  TextDetailView({
+  const TextDetailView({
     required this.title,
     required this.text,
     required this.color,
@@ -19,7 +19,7 @@ class TextDetailView extends StatelessWidget {
       height: 100,
       color: color,
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       child: Row(
         children: [
           Expanded(
@@ -49,10 +49,10 @@ class TextDetailView extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             borderOnForeground: false,
             child: IconButton(
-              icon: Icon(Icons.copy),
+              icon: const Icon(Icons.copy),
               iconSize: 20,
               color: color.textColor().withOpacity(0.6),
-              tooltip: "Copy",
+              tooltip: 'Copy',
               onPressed: () => Clipboard.setData(
                 ClipboardData(
                   text: text,

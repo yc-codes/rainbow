@@ -1,8 +1,10 @@
-import 'dart:convert';
-
 import 'package:hive/hive.dart';
 import 'package:rainbow/constants/app_constants.dart';
 import 'package:rainbow/data/models/favorite.dart';
+
+const colorsKey = 'colors';
+const lockedColorsKey = 'locked_colors';
+const favoriteColorsKey = 'favorite_colors';
 
 class AppHive {
   static HomePalette home = HomePalette();
@@ -13,39 +15,39 @@ class HomePalette {
   static HomeLockedColors lockedColors = HomeLockedColors();
 
   void put(List<String> colorsList) async {
-    var box = await Hive.openBox('colors');
-    box.put('data', colorsList);
+    final box = await Hive.openBox<dynamic>(colorsKey);
+    await box.put('data', colorsList);
   }
 
   Future<List<String>> get() async {
-    var box = await Hive.openBox('colors');
-    List<String> colors = box.get('data', defaultValue: AppConstants.initialhomePalette);
-    return colors;
+    final box = await Hive.openBox<List<String>>(colorsKey);
+    final colors = box.get('data', defaultValue: AppConstants.initialhomePalette);
+    return colors ?? [];
   }
 }
 
 class HomeLockedColors {
   static void put(List<String> colors) async {
-    var box = await Hive.openBox('locked_colors');
-    box.put('data', jsonEncode(colors));
+    final box = await Hive.openBox<dynamic>(lockedColorsKey);
+    await box.put('data', colors);
   }
 
-  static Future<String?> get() async {
-    var box = await Hive.openBox('locked_colors');
-    String? colors = box.get('data');
-    return colors;
+  static Future<List<String>> get() async {
+    final box = await Hive.openBox<List<String>>(lockedColorsKey);
+    final colors = box.get('data', defaultValue: []);
+    return colors ?? [];
   }
 }
 
 class FavoritePalette {
   Future<void> put(String name, List<String> colors) async {
-    Box<Favorite> box = await Hive.openBox<Favorite>('favorite_colors');
-    box.add(Favorite(name, colors));
-    box.close();
+    final box = await Hive.openBox<Favorite>(favoriteColorsKey);
+    await box.add(Favorite(name, colors));
+    await box.close();
   }
 
   Future<List<Favorite>> get() async {
-    Box<Favorite> box = await Hive.openBox<Favorite>('favorite_colors');
+    final box = await Hive.openBox<Favorite>(favoriteColorsKey);
     return box.values.toList().reversed.toList();
   }
 }

@@ -19,26 +19,26 @@ class _SettingsState extends State<Settings> {
         ),
       ),
       body: Container(
-        constraints: BoxConstraints(),
+        constraints: const BoxConstraints(),
         child: ListView(
-          children: [
+          children: const [
             SettingListItem(
               icon: Icons.settings_input_composite_sharp,
               color: Colors.blue,
-              title: "General",
-              subtitle: "Color Configration",
+              title: 'General',
+              subtitle: 'Color Configration',
             ),
             SettingListItem(
               icon: Icons.handyman_outlined,
               color: Colors.orange,
-              title: "Home Screen",
-              subtitle: "Home Screen Settings",
+              title: 'Home Screen',
+              subtitle: 'Home Screen Settings',
             ),
             SettingListItem(
               icon: Icons.info_outline,
               color: Colors.green,
-              title: "About",
-              subtitle: "About Rainbow",
+              title: 'About',
+              subtitle: 'About Rainbow',
             ),
           ],
         ),

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class BottomSheetItem extends StatelessWidget {
-  final void Function() onClick;
-  final String text;
-  final IconData icon;
-
   const BottomSheetItem({
     Key? key,
     required this.icon,
     required this.text,
     required this.onClick,
   }) : super(key: key);
+
+  final void Function() onClick;
+  final String text;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {

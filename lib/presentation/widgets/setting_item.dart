@@ -18,12 +18,12 @@ class SettingListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(
-        vertical: 4.0,
-        horizontal: 16.0,
+        vertical: 4,
+        horizontal: 16,
       ),
-      minVerticalPadding: 0.0,
+      minVerticalPadding: 0,
       onTap: () {
-        print("print");
+        print('print');
       },
       leading: Container(
         height: 34,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rainbow/presentation/widgets/text_detail.dart';
-import 'package:tinycolor/tinycolor.dart';
 import 'package:rainbow/utility/extensions/colors.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class ColorScreen extends StatefulWidget {
   final Color color;
 
-  ColorScreen({
+  const ColorScreen({
     required this.color,
   });
   @override
@@ -41,7 +41,7 @@ class _ColorScreenState extends State<ColorScreen> {
         centerTitle: true,
       ),
       body: Container(
-        constraints: BoxConstraints(),
+        constraints: const BoxConstraints(),
         child: ListView(
           children: [
             TextDetailView(
@@ -57,19 +57,19 @@ class _ColorScreenState extends State<ColorScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 24, 0, 12),
               child: Text(
-                "Shades",
+                'Shades',
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),
             ListView.builder(
               itemCount: colorsList.length,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
-                TinyColor color = colorsList[index];
+                final color = colorsList[index];
                 return Container(
                   height: 100,
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   color: color.color,
                   alignment: Alignment.centerLeft,
                   width: double.infinity,
@@ -83,7 +83,7 @@ class _ColorScreenState extends State<ColorScreen> {
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.copy),
+                        icon: const Icon(Icons.copy),
                         iconSize: 20,
                         color: color.textColor().withOpacity(0.6),
                         onPressed: () => Clipboard.setData(

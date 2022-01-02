@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
 
@@ -31,20 +30,20 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-  _getInitColors() async {
-    List<String> colors = await AppHive.home.get();
+  void _getInitColors() async {
+    final colors = await AppHive.home.get();
     _colorsList.addAll(colors);
     _notify();
   }
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
-    final double wrapperHeight = (MediaQuery.of(context).size.height -
+    final statusBarHeight = MediaQuery.of(context).padding.top;
+    final wrapperHeight = MediaQuery.of(context).size.height -
         MediaQuery.of(context).padding.top -
         MediaQuery.of(context).padding.bottom -
-        _bottomBarHeight);
-    final double _colorHeight = wrapperHeight / _colorsList.length;
+        _bottomBarHeight;
+    final _colorHeight = wrapperHeight / _colorsList.length;
 
     return Scaffold(
       bottomNavigationBar: BottomBar(
@@ -53,7 +52,7 @@ class _HomeState extends State<Home> {
         colorsList: _colorsList,
       ),
       body: Container(
-        constraints: BoxConstraints(),
+        constraints: const BoxConstraints(),
         child: ReorderableListView(
           onReorder: (oldIndex, newIndex) {
             if (newIndex > oldIndex) {
@@ -64,10 +63,10 @@ class _HomeState extends State<Home> {
             _notify();
           },
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           children: List.generate(_colorsList.length, (index) {
-            final Color _color = Color(int.parse('0xFF' + _colorsList[index]));
-            final Color _textColor = TinyColor(_color).textColor();
+            final _color = Color(int.parse('0xFF${_colorsList[index]}'));
+            final _textColor = TinyColor(_color).textColor();
             return Dismissible(
               key: Key(_colorsList[index]),
               confirmDismiss: (DismissDirection direction) {
@@ -83,12 +82,13 @@ class _HomeState extends State<Home> {
 
                 if (_colorsList.length == minColorLength) {
                   final snackBar = AppSnackBar(
-                    content: Text('You can\'t remove any more colors'),
+                    content: const Text("You can't remove any more colors"),
                     action: SnackBarAction(
                       label: 'OKAY',
-                      onPressed: () => {},
+                      onPressed: () {},
                     ),
                   );
+                  ScaffoldMessenger.of(context).clearSnackBars();
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   return Future<bool>.value(false);
                 }
@@ -104,9 +104,9 @@ class _HomeState extends State<Home> {
               background: AnimatedContainer(
                 color: _color.darken(6),
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 curve: Curves.easeOutExpo,
-                duration: Duration(
+                duration: const Duration(
                   milliseconds: 200,
                 ),
                 child: Icon(
@@ -118,7 +118,7 @@ class _HomeState extends State<Home> {
               secondaryBackground: Container(
                 color: _color.darken(6),
                 alignment: Alignment.centerRight,
-                padding: EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Icon(
                   Icons.remove_circle_outline,
                   color: _color.textColor(),
@@ -130,10 +130,8 @@ class _HomeState extends State<Home> {
                 openBuilder: (BuildContext _, VoidCallback openContainer) {
                   return ColorScreen(color: _color);
                 },
-                // onClosed: _showMarkedAsDoneSnackbar,
-                tappable: true,
                 closedShape: const RoundedRectangleBorder(),
-                closedElevation: 0.0,
+                closedElevation: 0,
                 closedColor: _color,
                 middleColor: _color,
                 openColor: Theme.of(context).scaffoldBackgroundColor,
@@ -155,7 +153,7 @@ class _HomeState extends State<Home> {
                               color: _textColor,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
-                              fontFeatures: [
+                              fontFeatures: const [
                                 FontFeature.tabularFigures(),
                               ],
                             ),
@@ -190,10 +188,10 @@ class _HomeState extends State<Home> {
   void addColorToList() {
     if (_colorsList.length == maxColorLength) {
       final snackBar = AppSnackBar(
-        content: Text(AppStrings.no_more_colors),
+        content: const Text(AppStrings.no_more_colors),
         action: SnackBarAction(
           label: AppStrings.okay,
-          onPressed: () => {},
+          onPressed: () {},
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -214,7 +212,7 @@ class _HomeState extends State<Home> {
   }
 
   String returnRandomHex() {
-    String _hex = '';
+    var _hex = '';
     do {
       _hex = (Random().nextDouble() * 16777215).round().toRadixString(16);
     } while (_hex.length < 6);

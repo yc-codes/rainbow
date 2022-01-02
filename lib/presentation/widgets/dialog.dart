@@ -38,8 +38,7 @@ class Dialog extends StatelessWidget {
     this.clipBehavior = Clip.none,
     this.shape,
     this.child,
-  })  : assert(clipBehavior != null),
-        super(key: key);
+  })  : super(key: key);
 
   /// {@template flutter.material.dialog.backgroundColor}
   /// The background color of the surface of this [Dialog].
@@ -111,13 +110,13 @@ class Dialog extends StatelessWidget {
 
   static const RoundedRectangleBorder _defaultDialogShape =
       RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(4.0)));
-  static const double _defaultElevation = 24.0;
+          borderRadius: BorderRadius.all(Radius.circular(4)),);
+  static const double _defaultElevation = 24;
 
   @override
   Widget build(BuildContext context) {
-    final DialogTheme dialogTheme = DialogTheme.of(context);
-    final EdgeInsets effectivePadding =
+    final dialogTheme = DialogTheme.of(context);
+    final effectivePadding =
         MediaQuery.of(context).viewInsets + (insetPadding ?? EdgeInsets.zero);
     return AnimatedPadding(
       padding: effectivePadding,
@@ -131,7 +130,7 @@ class Dialog extends StatelessWidget {
         context: context,
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(minWidth: 280.0),
+            constraints: const BoxConstraints(minWidth: 280),
             child: Material(
               color: backgroundColor ??
                   dialogTheme.backgroundColor ??
@@ -266,7 +265,7 @@ class AppAlertDialog extends StatelessWidget {
     this.titlePadding,
     this.titleTextStyle,
     this.content,
-    this.contentPadding = const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 24.0),
+    this.contentPadding = const EdgeInsets.fromLTRB(24, 20, 24, 24),
     this.contentTextStyle,
     this.actions,
     this.actionsPadding = EdgeInsets.zero,
@@ -280,9 +279,7 @@ class AppAlertDialog extends StatelessWidget {
     this.clipBehavior = Clip.none,
     this.shape,
     this.scrollable = false,
-  })  : assert(contentPadding != null),
-        assert(clipBehavior != null),
-        super(key: key);
+  })  : super(key: key);
 
   /// The (optional) title of the dialog is displayed in a large font at the top
   /// of the dialog.
@@ -465,10 +462,10 @@ class AppAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));
-    final ThemeData theme = Theme.of(context);
-    final DialogTheme dialogTheme = DialogTheme.of(context);
+    final theme = Theme.of(context);
+    final dialogTheme = DialogTheme.of(context);
 
-    String? label = semanticLabel;
+    var label = semanticLabel;
     switch (theme.platform) {
       case TargetPlatform.iOS:
       case TargetPlatform.macOS:
@@ -482,17 +479,17 @@ class AppAlertDialog extends StatelessWidget {
 
     // The paddingScaleFactor is used to adjust the padding of Dialog's
     // children.
-    final double paddingScaleFactor =
+    final paddingScaleFactor =
         _paddingScaleFactor(MediaQuery.of(context).textScaleFactor);
-    final TextDirection? textDirection = Directionality.maybeOf(context);
+    final textDirection = Directionality.maybeOf(context);
 
     Widget? titleWidget;
     Widget? contentWidget;
     Widget? actionsWidget;
     if (title != null) {
-      final EdgeInsets defaultTitlePadding =
-          EdgeInsets.fromLTRB(24.0, 24.0, 24.0, content == null ? 20.0 : 0.0);
-      final EdgeInsets effectiveTitlePadding =
+      final defaultTitlePadding =
+          EdgeInsets.fromLTRB(24, 24, 24, content == null ? 20.0 : 0.0);
+      final effectiveTitlePadding =
           titlePadding?.resolve(textDirection) ?? defaultTitlePadding;
       titleWidget = Padding(
         padding: EdgeInsets.only(
@@ -506,16 +503,16 @@ class AppAlertDialog extends StatelessWidget {
               dialogTheme.titleTextStyle ??
               theme.textTheme.headline6!,
           child: Semantics(
-            child: title,
             namesRoute: label == null,
             container: true,
+            child: title,
           ),
         ),
       );
     }
 
     if (content != null) {
-      final EdgeInsets effectiveContentPadding =
+      final effectiveContentPadding =
           contentPadding.resolve(textDirection);
       contentWidget = Padding(
         padding: EdgeInsets.only(
@@ -539,7 +536,7 @@ class AppAlertDialog extends StatelessWidget {
     }
 
     if (actions != null) {
-      final double spacing = (buttonPadding?.horizontal ?? 16) / 2;
+      final spacing = (buttonPadding?.horizontal ?? 16) / 2;
       actionsWidget = Padding(
         padding: actionsPadding,
         child: Container(
@@ -591,7 +588,7 @@ class AppAlertDialog extends StatelessWidget {
       ),
     );
 
-    if (label != null)
+    if (label != null) {
       dialogChild = Semantics(
         scopesRoute: true,
         explicitChildNodes: true,
@@ -599,6 +596,7 @@ class AppAlertDialog extends StatelessWidget {
         label: label,
         child: dialogChild,
       );
+    }
 
     return Dialog(
       backgroundColor: backgroundColor,
@@ -674,7 +672,7 @@ class SimpleDialogOption extends StatelessWidget {
       onTap: onPressed,
       child: Padding(
         padding: padding ??
-            const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+            const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
         child: child,
       ),
     );
@@ -762,19 +760,17 @@ class SimpleDialog extends StatelessWidget {
   const SimpleDialog({
     Key? key,
     this.title,
-    this.titlePadding = const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 0.0),
+    this.titlePadding = const EdgeInsets.fromLTRB(24, 24, 24, 0),
     this.titleTextStyle,
     this.children,
-    this.contentPadding = const EdgeInsets.fromLTRB(0.0, 12.0, 0.0, 16.0),
+    this.contentPadding = const EdgeInsets.fromLTRB(0, 12, 0, 16),
     this.backgroundColor,
     this.elevation,
     this.semanticLabel,
     this.insetPadding = _defaultInsetPadding,
     this.clipBehavior = Clip.none,
     this.shape,
-  })  : assert(titlePadding != null),
-        assert(contentPadding != null),
-        super(key: key);
+  })  : super(key: key);
 
   /// The (optional) title of the dialog is displayed in a large font at the top
   /// of the dialog.
@@ -851,9 +847,9 @@ class SimpleDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));
-    final ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
 
-    String? label = semanticLabel;
+    var label = semanticLabel;
     if (title == null) {
       switch (theme.platform) {
         case TargetPlatform.macOS:
@@ -870,13 +866,13 @@ class SimpleDialog extends StatelessWidget {
 
     // The paddingScaleFactor is used to adjust the padding of Dialog
     // children.
-    final double paddingScaleFactor =
+    final paddingScaleFactor =
         _paddingScaleFactor(MediaQuery.of(context).textScaleFactor);
-    final TextDirection? textDirection = Directionality.maybeOf(context);
+    final textDirection = Directionality.maybeOf(context);
 
     Widget? titleWidget;
     if (title != null) {
-      final EdgeInsets effectiveTitlePadding =
+      final effectiveTitlePadding =
           titlePadding.resolve(textDirection);
       titleWidget = Padding(
         padding: EdgeInsets.only(
@@ -902,7 +898,7 @@ class SimpleDialog extends StatelessWidget {
 
     Widget? contentWidget;
     if (children != null) {
-      final EdgeInsets effectiveContentPadding =
+      final effectiveContentPadding =
           contentPadding.resolve(textDirection);
       contentWidget = Flexible(
         child: SingleChildScrollView(
@@ -920,9 +916,9 @@ class SimpleDialog extends StatelessWidget {
     }
 
     Widget dialogChild = IntrinsicWidth(
-      stepWidth: 56.0,
+      stepWidth: 56,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(minWidth: 280.0),
+        constraints: const BoxConstraints(minWidth: 280),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -934,7 +930,7 @@ class SimpleDialog extends StatelessWidget {
       ),
     );
 
-    if (label != null)
+    if (label != null) {
       dialogChild = Semantics(
         scopesRoute: true,
         explicitChildNodes: true,
@@ -942,6 +938,7 @@ class SimpleDialog extends StatelessWidget {
         label: label,
         child: dialogChild,
       );
+    }
     return Dialog(
       backgroundColor: backgroundColor,
       elevation: elevation,
@@ -1071,13 +1068,9 @@ Future<T?> showDialog<T>({
   bool useRootNavigator = true,
   RouteSettings? routeSettings,
 }) {
-  assert(builder != null);
-  assert(barrierDismissible != null);
-  assert(useSafeArea != null);
-  assert(useRootNavigator != null);
   assert(debugCheckHasMaterialLocalizations(context));
 
-  final CapturedThemes themes = InheritedTheme.capture(
+  final themes = InheritedTheme.capture(
     from: context,
     to: Navigator.of(
       context,
@@ -1095,7 +1088,7 @@ Future<T?> showDialog<T>({
     useSafeArea: useSafeArea,
     settings: routeSettings,
     themes: themes,
-  ));
+  ),);
 }
 
 /// A dialog route with Material entrance and exit animations,
@@ -1151,12 +1144,11 @@ class DialogRoute<T> extends RawDialogRoute<T> {
     String? barrierLabel,
     bool useSafeArea = true,
     RouteSettings? settings,
-  })  : assert(barrierDismissible != null),
-        super(
+  })  : super(
           pageBuilder: (BuildContext buildContext, Animation<double> animation,
               Animation<double> secondaryAnimation) {
             final Widget pageChild = Builder(builder: builder);
-            Widget dialog = themes?.wrap(pageChild) ?? pageChild;
+            var dialog = themes?.wrap(pageChild) ?? pageChild;
             if (useSafeArea) {
               dialog = SafeArea(child: dialog);
             }
@@ -1173,7 +1165,7 @@ class DialogRoute<T> extends RawDialogRoute<T> {
 }
 
 double _paddingScaleFactor(double textScaleFactor) {
-  final double clampedTextScaleFactor =
+  final clampedTextScaleFactor =
       textScaleFactor.clamp(1.0, 2.0).toDouble();
   // The final padding scale factor is clamped between 1/3 and 1. For example,
   // a non-scaled padding of 24 will produce a padding between 24 and 8.

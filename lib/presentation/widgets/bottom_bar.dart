@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rainbow/constants/app_urls.dart';
 import 'package:rainbow/presentation/screens/favorites.dart';
-import 'package:rainbow/presentation/widgets/dialog.dart' as App;
+import 'package:rainbow/presentation/widgets/dialog.dart' as app;
 import 'package:rainbow/presentation/widgets/snackbar.dart';
 import 'package:rainbow/utility/helpers/hive.dart';
-import 'package:rainbow/utility/transitions/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'bottom_sheet_item.dart';
@@ -25,7 +24,7 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       height: _bottomBarHeight,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -35,7 +34,7 @@ class BottomBar extends StatelessWidget {
               bottomSheet(context);
             },
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Icon(
                 Icons.more_horiz_rounded,
                 color: Theme.of(context).textTheme.bodyText1!.color,
@@ -62,7 +61,7 @@ class BottomBar extends StatelessWidget {
           OutlinedButton(
             onPressed: onPlusClick,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Icon(
                 Icons.add,
                 color: Theme.of(context).textTheme.bodyText1!.color,
@@ -75,24 +74,22 @@ class BottomBar extends StatelessWidget {
     );
   }
 
-  SnackBar comingSoonSnackBar(context) {
-    return AppSnackBar(
+  SnackBar comingSoonSnackBar(BuildContext context) {
+    return const AppSnackBar(
       content: Text('Coming Soon'),
     );
   }
 
-  saveToFavorite(BuildContext context) {
+  void saveToFavorite(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
 
-    TextEditingController _nameController = TextEditingController();
+    final _nameController = TextEditingController();
 
-    showDialog(
+    showDialog<app.AppAlertDialog>(
       context: context,
-      builder: (_) => App.AppAlertDialog(
+      builder: (_) => app.AppAlertDialog(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        insetPadding: EdgeInsets.zero,
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         titlePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         buttonPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         title: Container(
@@ -112,17 +109,16 @@ class BottomBar extends StatelessWidget {
               }
               return null;
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Palette Name',
             ),
           ),
         ),
-        actionsPadding: const EdgeInsets.symmetric(horizontal: 0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
         actions: [
-          Container(
+          SizedBox(
             width: double.infinity,
             child: OutlinedButton(
               onPressed: () async {
@@ -131,7 +127,7 @@ class BottomBar extends StatelessWidget {
                     _nameController.text.trim(),
                     colorsList,
                   );
-                  var snackBar = AppSnackBar(
+                  final snackBar = const AppSnackBar(
                     content: Text('Pelette added to Favorites'),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -158,14 +154,14 @@ class BottomBar extends StatelessWidget {
     );
   }
 
-  bottomSheet(BuildContext context) {
-    showModalBottomSheet(
+  void bottomSheet(BuildContext context) {
+    showModalBottomSheet<Container>(
       context: context,
       isScrollControlled: true,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: const Radius.circular(16),
-          topRight: const Radius.circular(16),
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
         ),
       ),
       builder: (_) {
@@ -179,50 +175,44 @@ class BottomBar extends StatelessWidget {
                 onClick: () {
                   saveToFavorite(context);
                 },
-                text: "Save to Favorites",
+                text: 'Save to Favorites',
               ),
               BottomSheetItem(
                 icon: Icons.share,
                 onClick: () async {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(comingSoonSnackBar(context));
+                  ScaffoldMessenger.of(context).showSnackBar(comingSoonSnackBar(context));
                 },
-                text: "Share Palette",
+                text: 'Share Palette',
               ),
               BottomSheetItem(
                 icon: Icons.favorite_rounded,
-                onClick: () async {
-                  Navigator.push(context, goToScreen(FavoritesScreen()));
+                onClick: () {
+                  Navigator.push<Route>(context, MaterialPageRoute(builder: (context) => const FavoritesScreen()));
                 },
-                text: "Favorites",
+                text: 'Favorites',
               ),
               BottomSheetItem(
                 icon: Icons.image,
                 onClick: () {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(comingSoonSnackBar(context));
+                  ScaffoldMessenger.of(context).showSnackBar(comingSoonSnackBar(context));
                 },
-                text: "Generate Palette from Image",
+                text: 'Generate Palette from Image',
               ),
               BottomSheetItem(
                 icon: Icons.upcoming,
                 onClick: () async {
-                  String _url = AppURLs.upcomingFeatures;
-                  await canLaunch(_url)
-                      ? await launch(_url)
-                      : throw 'Could not launch $_url';
+                  final _url = AppURLs.upcomingFeatures;
+                  await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
                 },
-                text: "Upcoming Features",
+                text: 'Upcoming Features',
               ),
               BottomSheetItem(
                 icon: Icons.help_outline,
                 onClick: () async {
-                  String _url = AppURLs.howToUse;
-                  await canLaunch(_url)
-                      ? await launch(_url)
-                      : throw 'Could not launch $_url';
+                  final _url = AppURLs.howToUse;
+                  await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
                 },
-                text: "How to use",
+                text: 'How to use',
               ),
               // BottomSheetItem(
               //   icon: Icons.settings,

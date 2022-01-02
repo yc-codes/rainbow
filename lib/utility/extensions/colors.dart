@@ -23,5 +23,5 @@ extension HexColor on Color {
 }
 
 extension TinyHexColor on TinyColor {
-  Color textColor() => this.isDark() ? Colors.white : Colors.black;
+  Color textColor() => isDark() ? Colors.white : Colors.black;
 }

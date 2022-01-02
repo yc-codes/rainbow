@@ -7,10 +7,10 @@ class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({Key? key}) : super(key: key);
 
   @override
-  _FavoritesScreenState createState() => _FavoritesScreenState();
+  FavoritesScreenState createState() => FavoritesScreenState();
 }
 
-class _FavoritesScreenState extends State<FavoritesScreen> {
+class FavoritesScreenState extends State<FavoritesScreen> {
   List<Favorite> paletteList = [];
 
   @override
@@ -19,7 +19,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     super.initState();
   }
 
-  void getPalettes() async {
+  Future<void> getPalettes() async {
     paletteList = await AppHive.favorites.get();
     _notify();
   }

@@ -12,11 +12,13 @@ import 'package:rainbow/utility/helpers/hive.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
   @override
-  _HomeState createState() => _HomeState();
+  HomeState createState() => HomeState();
 }
 
-class _HomeState extends State<Home> {
+class HomeState extends State<Home> {
   final List<String> _colorsList = [];
   final List<String> _lockedColorsList = [];
   final double _bottomBarHeight = 60;
@@ -30,7 +32,7 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-  void _getInitColors() async {
+  Future<void> _getInitColors() async {
     final colors = await AppHive.home.get();
     _colorsList.addAll(colors);
     _notify();
@@ -188,7 +190,7 @@ class _HomeState extends State<Home> {
   void addColorToList() {
     if (_colorsList.length == maxColorLength) {
       final snackBar = AppSnackBar(
-        content: const Text(AppStrings.no_more_colors),
+        content: const Text(AppStrings.noMoreColors),
         action: SnackBarAction(
           label: AppStrings.okay,
           onPressed: () {},

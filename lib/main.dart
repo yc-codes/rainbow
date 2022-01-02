@@ -3,11 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rainbow/constants/themes.dart';
+import 'package:rainbow/data/models/favorite.dart';
 import 'package:rainbow/presentation/screens/home.dart';
 
-import 'data/models/favorite.dart';
-
-void main() async {
+Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(FavoriteAdapter());
   SystemChrome.setSystemUIOverlayStyle(
@@ -16,10 +15,12 @@ void main() async {
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]).then((_) => runApp(RainbowApp()));
+  ]).then((_) => runApp(const RainbowApp()));
 }
 
 class RainbowApp extends StatelessWidget {
+  const RainbowApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,7 +29,7 @@ class RainbowApp extends StatelessWidget {
       theme: AppThemes.darkTheme,
       darkTheme: AppThemes.darkTheme,
       themeMode: ThemeMode.dark,
-      home: Home(),
+      home: const Home(),
     );
   }
 }

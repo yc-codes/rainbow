@@ -3,15 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:rainbow/utility/extensions/colors.dart';
 
 class TextDetailView extends StatelessWidget {
-  final String title;
-  final String text;
-  final Color color;
-
   const TextDetailView({
+    Key? key,
     required this.title,
     required this.text,
     required this.color,
-  });
+  }) : super(key: key);
+
+  final String title;
+  final String text;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {

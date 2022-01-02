@@ -14,9 +14,7 @@ class AppThemes {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
-        padding: MaterialStateProperty.all<EdgeInsets>(
-          const EdgeInsets.all(0),
-        ),
+        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
         backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade900),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         minimumSize: MaterialStateProperty.all<Size>(Size.zero),

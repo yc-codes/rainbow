@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:rainbow/constants/app_urls.dart';
 import 'package:rainbow/presentation/screens/favorites.dart';
+import 'package:rainbow/presentation/widgets/bottom_sheet_item.dart';
 import 'package:rainbow/presentation/widgets/dialog.dart' as app;
 import 'package:rainbow/presentation/widgets/snackbar.dart';
 import 'package:rainbow/utility/helpers/hive.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'bottom_sheet_item.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({
@@ -16,13 +15,13 @@ class BottomBar extends StatelessWidget {
     required this.colorsList,
   }) : super(key: key);
 
-  final double _bottomBarHeight = 60;
   final void Function() onGenerateClick;
   final void Function() onPlusClick;
   final List<String> colorsList;
 
   @override
   Widget build(BuildContext context) {
+    const _bottomBarHeight = 60.0;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       height: _bottomBarHeight,
@@ -127,7 +126,7 @@ class BottomBar extends StatelessWidget {
                     _nameController.text.trim(),
                     colorsList,
                   );
-                  final snackBar = const AppSnackBar(
+                  const snackBar = AppSnackBar(
                     content: Text('Pelette added to Favorites'),
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -201,7 +200,7 @@ class BottomBar extends StatelessWidget {
               BottomSheetItem(
                 icon: Icons.upcoming,
                 onClick: () async {
-                  final _url = AppURLs.upcomingFeatures;
+                  const _url = AppURLs.upcomingFeatures;
                   await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
                 },
                 text: 'Upcoming Features',
@@ -209,7 +208,7 @@ class BottomBar extends StatelessWidget {
               BottomSheetItem(
                 icon: Icons.help_outline,
                 onClick: () async {
-                  final _url = AppURLs.howToUse;
+                  const _url = AppURLs.howToUse;
                   await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
                 },
                 text: 'How to use',

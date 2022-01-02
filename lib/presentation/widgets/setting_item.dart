@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SettingListItem extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final Color color;
-
   const SettingListItem({
     Key? key,
     required this.icon,
@@ -13,6 +8,11 @@ class SettingListItem extends StatelessWidget {
     required this.subtitle,
     required this.color,
   }) : super(key: key);
+
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +22,7 @@ class SettingListItem extends StatelessWidget {
         horizontal: 16,
       ),
       minVerticalPadding: 0,
-      onTap: () {
-        print('print');
-      },
+      onTap: () {},
       leading: Container(
         height: 34,
         width: 34,

@@ -14,7 +14,7 @@ class AppHive {
 class HomePalette {
   static HomeLockedColors lockedColors = HomeLockedColors();
 
-  void put(List<String> colorsList) async {
+  Future<void> put(List<String> colorsList) async {
     final box = await Hive.openBox<dynamic>(colorsKey);
     await box.put('data', colorsList);
   }
@@ -27,7 +27,7 @@ class HomePalette {
 }
 
 class HomeLockedColors {
-  static void put(List<String> colors) async {
+  static Future<void> put(List<String> colors) async {
     final box = await Hive.openBox<dynamic>(lockedColorsKey);
     await box.put('data', colors);
   }

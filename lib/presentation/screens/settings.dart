@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:rainbow/presentation/widgets/setting_item.dart';
 
 class Settings extends StatefulWidget {
+  const Settings({Key? key}) : super(key: key);
+
   @override
   _SettingsState createState() => _SettingsState();
 }

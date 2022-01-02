@@ -5,16 +5,18 @@ import 'package:rainbow/utility/extensions/colors.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class ColorScreen extends StatefulWidget {
+  const ColorScreen({
+    Key? key,
+    required this.color,
+  }) : super(key: key);
+
   final Color color;
 
-  const ColorScreen({
-    required this.color,
-  });
   @override
-  _ColorScreenState createState() => _ColorScreenState();
+  ColorScreenState createState() => ColorScreenState();
 }
 
-class _ColorScreenState extends State<ColorScreen> {
+class ColorScreenState extends State<ColorScreen> {
   List<TinyColor> colorsList = [];
 
   @override

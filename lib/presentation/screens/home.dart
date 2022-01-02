@@ -32,19 +32,19 @@ class _HomeState extends State<Home> {
   }
 
   _getInitColors() async {
-    String colors = await AppHive.home.get();
-    _colorsList.addAll(Iterable.castFrom(jsonDecode(colors)));
+    List<String> colors = await AppHive.home.get();
+    _colorsList.addAll(colors);
     _notify();
   }
 
   @override
   Widget build(BuildContext context) {
-    // final double statusBarHeight = MediaQuery.of(context).padding.top;
-    double _colorHeight = (MediaQuery.of(context).size.height -
-            MediaQuery.of(context).padding.top -
-            MediaQuery.of(context).padding.bottom -
-            _bottomBarHeight) /
-        _colorsList.length;
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    final double wrapperHeight = (MediaQuery.of(context).size.height -
+        MediaQuery.of(context).padding.top -
+        MediaQuery.of(context).padding.bottom -
+        _bottomBarHeight);
+    final double _colorHeight = wrapperHeight / _colorsList.length;
 
     return Scaffold(
       bottomNavigationBar: BottomBar(
@@ -52,151 +52,136 @@ class _HomeState extends State<Home> {
         onPlusClick: addColorToList,
         colorsList: _colorsList,
       ),
-      body: SafeArea(
-        child: Container(
-          constraints: BoxConstraints(),
-          child: ReorderableListView(
-            onReorder: (oldIndex, newIndex) {
-              if (newIndex > oldIndex) {
-                newIndex -= 1;
-              }
-              final _color = _colorsList.removeAt(oldIndex);
-              _colorsList.insert(newIndex, _color);
-              _notify();
-            },
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            children: List.generate(_colorsList.length, (index) {
-              final Color _color =
-                  Color(int.parse('0xFF' + _colorsList[index]));
-              final Color _textColor = TinyColor(_color).textColor();
-              return Dismissible(
-                key: Key(_colorsList[index]),
-                confirmDismiss: (DismissDirection direction) {
-                  if (direction == DismissDirection.startToEnd) {
-                    if (_lockedColorsList.contains(_colorsList[index])) {
-                      _lockedColorsList.remove(_colorsList[index]);
-                    } else {
-                      _lockedColorsList.add(_colorsList[index]);
-                    }
-                    _notify();
-                    return Future<bool>.value(false);
+      body: Container(
+        constraints: BoxConstraints(),
+        child: ReorderableListView(
+          onReorder: (oldIndex, newIndex) {
+            if (newIndex > oldIndex) {
+              newIndex -= 1;
+            }
+            final _color = _colorsList.removeAt(oldIndex);
+            _colorsList.insert(newIndex, _color);
+            _notify();
+          },
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          children: List.generate(_colorsList.length, (index) {
+            final Color _color = Color(int.parse('0xFF' + _colorsList[index]));
+            final Color _textColor = TinyColor(_color).textColor();
+            return Dismissible(
+              key: Key(_colorsList[index]),
+              confirmDismiss: (DismissDirection direction) {
+                if (direction == DismissDirection.startToEnd) {
+                  if (_lockedColorsList.contains(_colorsList[index])) {
+                    _lockedColorsList.remove(_colorsList[index]);
+                  } else {
+                    _lockedColorsList.add(_colorsList[index]);
                   }
-
-                  if (_colorsList.length == minColorLength) {
-                    final snackBar = AppSnackBar(
-                      content: Text('You can\'t remove any more colors'),
-                      action: SnackBarAction(
-                        label: 'OKAY',
-                        onPressed: () => {},
-                      ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    return Future<bool>.value(false);
-                  }
-
-                  return Future<bool>.value(true);
-                },
-                onDismissed: (DismissDirection direction) {
-                  _lockedColorsList.remove(_colorsList[index]);
-                  _colorsList.removeAt(index);
-                  AppHive.home.put(_colorsList);
                   _notify();
+                  return Future<bool>.value(false);
+                }
+
+                if (_colorsList.length == minColorLength) {
+                  final snackBar = AppSnackBar(
+                    content: Text('You can\'t remove any more colors'),
+                    action: SnackBarAction(
+                      label: 'OKAY',
+                      onPressed: () => {},
+                    ),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  return Future<bool>.value(false);
+                }
+
+                return Future<bool>.value(true);
+              },
+              onDismissed: (DismissDirection direction) {
+                _lockedColorsList.remove(_colorsList[index]);
+                _colorsList.removeAt(index);
+                AppHive.home.put(_colorsList);
+                _notify();
+              },
+              background: AnimatedContainer(
+                color: _color.darken(6),
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                curve: Curves.easeOutExpo,
+                duration: Duration(
+                  milliseconds: 200,
+                ),
+                child: Icon(
+                  _lockedColorsList.contains(_colorsList[index]) ? Icons.lock_open : Icons.lock,
+                  color: _color.textColor(),
+                  size: 32,
+                ),
+              ),
+              secondaryBackground: Container(
+                color: _color.darken(6),
+                alignment: Alignment.centerRight,
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: Icon(
+                  Icons.remove_circle_outline,
+                  color: _color.textColor(),
+                  size: 32,
+                ),
+              ),
+              child: OpenContainer<bool>(
+                transitionType: _transitionType,
+                openBuilder: (BuildContext _, VoidCallback openContainer) {
+                  return ColorScreen(color: _color);
                 },
-                background: AnimatedContainer(
-                  color: _color.darken(6),
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  curve: Curves.easeOutExpo,
-                  duration: Duration(
-                    milliseconds: 200,
-                  ),
-                  child: Icon(
-                    _lockedColorsList.contains(_colorsList[index])
-                        ? Icons.lock_open
-                        : Icons.lock,
-                    color: _color.textColor(),
-                    size: 32,
-                  ),
-                ),
-                secondaryBackground: Container(
-                  color: _color.darken(6),
-                  alignment: Alignment.centerRight,
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  child: Icon(
-                    Icons.remove_circle_outline,
-                    color: _color.textColor(),
-                    size: 32,
-                  ),
-                ),
-                child: OpenContainer<bool>(
-                  transitionType: _transitionType,
-                  openBuilder: (BuildContext _, VoidCallback openContainer) {
-                    return ColorScreen(color: _color);
-                  },
-                  // onClosed: _showMarkedAsDoneSnackbar,
-                  tappable: true,
-                  closedShape: const RoundedRectangleBorder(),
-                  closedElevation: 0.0,
-                  closedColor: _color,
-                  middleColor: _color,
-                  openColor: Theme.of(context).scaffoldBackgroundColor,
-                  closedBuilder: (BuildContext _, VoidCallback openContainer) {
-                    return Container(
-                      alignment: Alignment.center,
-                      height: _colorHeight,
-                      color: _color,
-                      padding: EdgeInsets.only(right: 12),
-                      child: ListTile(
-                        tileColor: _color,
-                        hoverColor: _color.darken(5),
-                        title: Container(
-                          height: _colorHeight,
-                          alignment: Alignment.centerLeft,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                _colorsList[index].toUpperCase(),
-                                style: TextStyle(
-                                  color: _textColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  fontFeatures: [
-                                    FontFeature.tabularFigures(),
-                                  ],
-                                ),
-                              ),
-                              IconButton(
-                                icon: Icon(
-                                  _lockedColorsList.contains(_colorsList[index])
-                                      ? Icons.lock
-                                      : Icons.lock_open,
-                                ),
-                                color: _color.isDark
-                                    ? _color.lighten(20)
-                                    : _color.darken(20),
-                                onPressed: () {
-                                  if (_lockedColorsList
-                                      .contains(_colorsList[index])) {
-                                    _lockedColorsList
-                                        .remove(_colorsList[index]);
-                                  } else {
-                                    _lockedColorsList.add(_colorsList[index]);
-                                  }
-                                  if (mounted) _notify();
-                                },
-                              ),
-                            ],
+                // onClosed: _showMarkedAsDoneSnackbar,
+                tappable: true,
+                closedShape: const RoundedRectangleBorder(),
+                closedElevation: 0.0,
+                closedColor: _color,
+                middleColor: _color,
+                openColor: Theme.of(context).scaffoldBackgroundColor,
+                closedBuilder: (BuildContext _, VoidCallback openContainer) {
+                  return Container(
+                    height: index == 0 ? statusBarHeight + _colorHeight : _colorHeight,
+                    color: _color,
+                    padding: EdgeInsets.only(right: 12, top: index == 0 ? statusBarHeight : 0),
+                    alignment: Alignment.centerLeft,
+                    child: ListTile(
+                      tileColor: _color,
+                      hoverColor: _color.darken(5),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            _colorsList[index].toUpperCase(),
+                            style: TextStyle(
+                              color: _textColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              fontFeatures: [
+                                FontFeature.tabularFigures(),
+                              ],
+                            ),
                           ),
-                        ),
+                          IconButton(
+                            icon: Icon(
+                              _lockedColorsList.contains(_colorsList[index]) ? Icons.lock : Icons.lock_open,
+                            ),
+                            color: _color.isDark ? _color.lighten(20) : _color.darken(20),
+                            onPressed: () {
+                              if (_lockedColorsList.contains(_colorsList[index])) {
+                                _lockedColorsList.remove(_colorsList[index]);
+                              } else {
+                                _lockedColorsList.add(_colorsList[index]);
+                              }
+                              if (mounted) _notify();
+                            },
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                ),
-              );
-            }),
-          ),
+                    ),
+                  );
+                },
+              ),
+            );
+          }),
         ),
       ),
     );

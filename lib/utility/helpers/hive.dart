@@ -14,13 +14,12 @@ class HomePalette {
 
   void put(List<String> colorsList) async {
     var box = await Hive.openBox('colors');
-    box.put('data', jsonEncode(colorsList));
+    box.put('data', colorsList);
   }
 
-  Future<String> get() async {
+  Future<List<String>> get() async {
     var box = await Hive.openBox('colors');
-    String colors =
-        box.get('data', defaultValue: AppConstants.initialhomePalette);
+    List<String> colors = box.get('data', defaultValue: AppConstants.initialhomePalette);
     return colors;
   }
 }

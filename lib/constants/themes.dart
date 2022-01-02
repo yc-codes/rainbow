@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppThemes {
   static ThemeData lightTheme = ThemeData(
@@ -27,7 +28,7 @@ class AppThemes {
     ),
     highlightColor: Colors.transparent,
     appBarTheme: AppBarTheme(
-      brightness: Brightness.light,
+      systemOverlayStyle: SystemUiOverlayStyle.light,
       color: Colors.white,
       elevation: 1,
       centerTitle: true,
@@ -101,7 +102,7 @@ class AppThemes {
     ),
     highlightColor: Colors.transparent,
     appBarTheme: AppBarTheme(
-      brightness: Brightness.dark,
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
       color: Colors.grey.shade900,
       elevation: 1,
       centerTitle: true,

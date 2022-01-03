@@ -37,7 +37,7 @@ class ColorScreenState extends State<ColorScreen> {
       appBar: AppBar(
         // backgroundColor: widget.color,
         title: Text(
-          'View Color',
+          'Color #${widget.color.toHex()}',
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         centerTitle: true,

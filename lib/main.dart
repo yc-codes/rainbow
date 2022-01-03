@@ -9,9 +9,8 @@ import 'package:rainbow/presentation/screens/home.dart';
 Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(FavoriteAdapter());
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-  );
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -19,7 +18,9 @@ Future<void> main() async {
 }
 
 class RainbowApp extends StatelessWidget {
-  const RainbowApp({Key? key}) : super(key: key);
+  const RainbowApp({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

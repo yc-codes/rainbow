@@ -15,12 +15,12 @@ class HomePalette {
   static HomeLockedColors lockedColors = HomeLockedColors();
 
   Future<void> put(List<String> colorsList) async {
-    final box = await Hive.openBox<dynamic>(colorsKey);
+    final box = Hive.box<List<String>>(colorsKey);
     await box.put('data', colorsList);
   }
 
   Future<List<String>> get() async {
-    final box = await Hive.openBox<List<String>>(colorsKey);
+    final box = Hive.box<List<String>>(colorsKey);
     final colors = box.get('data', defaultValue: AppConstants.initialhomePalette);
     return colors ?? [];
   }
@@ -28,12 +28,12 @@ class HomePalette {
 
 class HomeLockedColors {
   static Future<void> put(List<String> colors) async {
-    final box = await Hive.openBox<dynamic>(lockedColorsKey);
+    final box = Hive.box<List<String>>(lockedColorsKey);
     await box.put('data', colors);
   }
 
   static Future<List<String>> get() async {
-    final box = await Hive.openBox<List<String>>(lockedColorsKey);
+    final box = Hive.box<List<String>>(lockedColorsKey);
     final colors = box.get('data', defaultValue: []);
     return colors ?? [];
   }
@@ -47,7 +47,7 @@ class FavoritePalette {
   }
 
   Future<List<Favorite>> get() async {
-    final box = await Hive.openBox<Favorite>(favoriteColorsKey);
+    final box = Hive.box<Favorite>(favoriteColorsKey);
     return box.values.toList().reversed.toList();
   }
 }

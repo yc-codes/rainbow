@@ -120,17 +120,21 @@ class BottomBar extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: OutlinedButton(
-              onPressed: () async {
+              onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  await AppHive.favorites.put(
+                  AppHive.favorites
+                      .put(
                     _nameController.text.trim(),
                     colorsList,
-                  );
-                  const snackBar = AppSnackBar(
-                    content: Text('Pelette added to Favorites'),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  Navigator.pop(context);
+                  )
+                      .then((value) {
+                    const snackBar = AppSnackBar(
+                      content: Text('Pelette added to Favorites'),
+                    );
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.pop(context);
+                  });
                 }
               },
               style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
@@ -179,6 +183,7 @@ class BottomBar extends StatelessWidget {
               BottomSheetItem(
                 icon: Icons.share,
                 onClick: () async {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
                   ScaffoldMessenger.of(context).showSnackBar(comingSoonSnackBar(context));
                 },
                 text: 'Share Palette',
@@ -193,6 +198,7 @@ class BottomBar extends StatelessWidget {
               BottomSheetItem(
                 icon: Icons.image,
                 onClick: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
                   ScaffoldMessenger.of(context).showSnackBar(comingSoonSnackBar(context));
                 },
                 text: 'Generate Palette from Image',

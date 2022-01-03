@@ -3,7 +3,9 @@ import 'dart:ui';
 
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:rainbow/constants/app_strings.dart';
+import 'package:rainbow/data/models/favorite.dart';
 import 'package:rainbow/presentation/screens/color.dart';
 import 'package:rainbow/presentation/widgets/bottom_bar.dart';
 import 'package:rainbow/presentation/widgets/snackbar.dart';
@@ -28,8 +30,25 @@ class HomeState extends State<Home> {
 
   @override
   void initState() {
-    _getInitColors();
     super.initState();
+    _openHiveBoxes();
+  }
+
+  @override
+  void dispose() {
+    _closeHiveBoxes();
+    super.dispose();
+  }
+
+  Future<void> _closeHiveBoxes() async {
+    await Hive.close();
+  }
+
+  Future<void> _openHiveBoxes() async {
+    await Hive.openBox<List<String>>(colorsKey);
+    await Hive.openBox<List<String>>(lockedColorsKey);
+    await Hive.openBox<Favorite>(favoriteColorsKey);
+    await _getInitColors();
   }
 
   Future<void> _getInitColors() async {
@@ -90,7 +109,7 @@ class HomeState extends State<Home> {
                       onPressed: () {},
                     ),
                   );
-                  ScaffoldMessenger.of(context).clearSnackBars();
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   return Future<bool>.value(false);
                 }
@@ -196,6 +215,7 @@ class HomeState extends State<Home> {
           onPressed: () {},
         ),
       );
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       return;
     }

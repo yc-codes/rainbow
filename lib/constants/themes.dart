@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppThemes {
   static ThemeData darkTheme = ThemeData(
@@ -30,19 +31,21 @@ class AppThemes {
         borderRadius: BorderRadius.circular(6),
       ),
     ),
-    textTheme: const TextTheme(
-      bodyText1: TextStyle(
-        color: Colors.white,
-      ),
-      headline6: TextStyle(
-        color: Colors.white,
-        // fontWeight: FontWeight.w300,
-        fontSize: 16,
-      ),
-      subtitle1: TextStyle(
-        color: Colors.grey,
-        // fontWeight: FontWeight.w300,
-        fontSize: 14,
+    textTheme: GoogleFonts.interTextTheme(
+      const TextTheme(
+        bodyText1: TextStyle(
+          color: Colors.white,
+        ),
+        headline6: TextStyle(
+          color: Colors.white,
+          // fontWeight: FontWeight.w300,
+          fontSize: 16,
+        ),
+        subtitle1: TextStyle(
+          color: Colors.grey,
+          // fontWeight: FontWeight.w300,
+          fontSize: 14,
+        ),
       ),
     ),
     highlightColor: Colors.transparent,

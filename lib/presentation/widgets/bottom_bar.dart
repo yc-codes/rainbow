@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rainbow/constants/app_urls.dart';
 import 'package:rainbow/presentation/screens/favorites.dart';
 import 'package:rainbow/presentation/widgets/bottom_sheet_item.dart';
-import 'package:rainbow/presentation/widgets/dialog.dart' as app;
 import 'package:rainbow/presentation/widgets/snackbar.dart';
 import 'package:rainbow/utility/helpers/hive.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,10 +20,10 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const _bottomBarHeight = 60.0;
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      height: _bottomBarHeight,
+      padding: EdgeInsets.fromLTRB(16, 8, 16, 8 + bottomPadding),
+      height: kBottomNavigationBarHeight + bottomPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -84,9 +83,10 @@ class BottomBar extends StatelessWidget {
 
     final _nameController = TextEditingController();
 
-    showDialog<app.AppAlertDialog>(
+    showDialog<AlertDialog>(
       context: context,
-      builder: (_) => app.AppAlertDialog(
+      builder: (_) => AlertDialog(
+        insetPadding: EdgeInsets.zero,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         titlePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -207,7 +207,7 @@ class BottomBar extends StatelessWidget {
                 icon: Icons.upcoming,
                 onClick: () async {
                   const _url = AppURLs.upcomingFeatures;
-                  await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
+                  if (await canLaunch(_url)) await launch(_url);
                 },
                 text: 'Upcoming Features',
               ),
@@ -215,7 +215,7 @@ class BottomBar extends StatelessWidget {
                 icon: Icons.help_outline,
                 onClick: () async {
                   const _url = AppURLs.howToUse;
-                  await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
+                  if (await canLaunch(_url)) await launch(_url);
                 },
                 text: 'How to use',
               ),

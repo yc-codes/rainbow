@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -14,7 +15,9 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]).then((_) => runApp(const RainbowApp()));
+  ]).then(
+    (_) => runApp(const RainbowApp()),
+  );
 }
 
 class RainbowApp extends StatelessWidget {
@@ -24,13 +27,18 @@ class RainbowApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Rainbow',
-      debugShowCheckedModeBanner: false,
-      theme: AppThemes.darkTheme,
-      darkTheme: AppThemes.darkTheme,
-      themeMode: ThemeMode.dark,
-      home: const Home(),
+    return DevicePreview(
+      // enabled: false,
+      // isToolbarVisible: false,
+      builder: (context) => MaterialApp(
+        title: 'Rainbow',
+        useInheritedMediaQuery: true,
+        debugShowCheckedModeBanner: false,
+        theme: AppThemes.darkTheme,
+        darkTheme: AppThemes.darkTheme,
+        themeMode: ThemeMode.dark,
+        home: const Home(),
+      ),
     );
   }
 }

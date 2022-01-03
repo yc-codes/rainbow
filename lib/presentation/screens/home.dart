@@ -23,7 +23,6 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   final List<String> _colorsList = [];
   final List<String> _lockedColorsList = [];
-  final double _bottomBarHeight = 60;
   final ContainerTransitionType _transitionType = ContainerTransitionType.fade;
   final int minColorLength = 2;
   final int maxColorLength = 10;
@@ -59,11 +58,9 @@ class HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final statusBarHeight = MediaQuery.of(context).padding.top;
-    final wrapperHeight = MediaQuery.of(context).size.height -
-        MediaQuery.of(context).padding.top -
-        MediaQuery.of(context).padding.bottom -
-        _bottomBarHeight;
+    final media = MediaQuery.of(context);
+    final statusBarHeight = media.padding.top;
+    final wrapperHeight = media.size.height - media.padding.top - media.padding.bottom - kBottomNavigationBarHeight;
     final _colorHeight = wrapperHeight / _colorsList.length;
 
     return Scaffold(

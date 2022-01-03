@@ -1,20 +1,27 @@
-# Rainbow - Color Palette Generator
+<div align="center">
 
-### Upcoming Features
+<img width="" src="android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" alt="Rainbow Logo" align="center">
 
-- [ ] Load Paletts from Favorites
-- [ ] Dark Light Theme Switch
-- [ ] Backup Palettes
-- [ ] Settings to Update Shades, Color Scheme, Theme, and more
-- [ ] Share & Export Palette Options
-- [ ] Image Color Picker with Palette Generator
-- [ ] Language Support
-- [ ] Feature Requests
+# Rainbow
 
-### How to use
-- Swipe Left on Color to Remove
-- Swipe Right on Color to Lock 
-- Click and Hold to Organize Colors
-- Click on color to see Shades and more info
-- `Save to Favorite` to Save Palette to Favorites 
-- `Favorites` contain List of Favorite Palettes
+Color Pallete Generator.
+
+<img width="200px" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" />
+
+### :camera: Screenshots
+<img width="" src="assets/github/screenshot.png" alt="Rainbow Logo" align="center">
+
+<div align="left">
+
+## :book: Features
+
+* Easy to use
+* Generate Palletes
+* Save Favorite Color Palletes
+* Change color on the go
+* more coming soon...
+
+## :scroll: License
+
+Licensed GPLv3+. \
+Copyright © 2020–2021 yc-codes and contributors.

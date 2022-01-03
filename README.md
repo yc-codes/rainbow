@@ -11,7 +11,7 @@ Color Pallete Generator.
 
 <div align="left">
 
-### :camera: Screenshots
+## :camera: Screenshots
 <img width="" src="assets/github/screenshot.png" alt="Rainbow Logo" align="center">
 
 ## :book: Features

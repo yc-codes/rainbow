@@ -5,9 +5,9 @@
 # Rainbow
 
 Color Pallete Generator.
-
+<a href="https://play.google.com/store/apps/details?id=dev.bsteps.rainbow" target="_blank">
 <img width="200px" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" />
-
+</a>
 
 <div align="left">
 

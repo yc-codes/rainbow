@@ -8,10 +8,11 @@ Color Pallete Generator.
 
 <img width="200px" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" />
 
-### :camera: Screenshots
-<img width="" src="assets/github/screenshot.png" alt="Rainbow Logo" align="center">
 
 <div align="left">
+
+### :camera: Screenshots
+<img width="" src="assets/github/screenshot.png" alt="Rainbow Logo" align="center">
 
 ## :book: Features
 

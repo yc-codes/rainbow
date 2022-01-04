@@ -61,7 +61,11 @@ class AppThemes {
           iconTheme: const IconThemeData(
             color: Colors.white,
           ),
-          titleTextStyle: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.white),
+          titleTextStyle: GoogleFonts.inter(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         dividerColor: Colors.grey.shade700,
         scaffoldBackgroundColor: Colors.grey.shade900,

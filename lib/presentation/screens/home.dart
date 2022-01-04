@@ -101,8 +101,8 @@ class HomeState extends State<Home> {
                 key: Key('color_$index'),
                 color: _color,
                 height: index == 0 ? statusBarHeight + _colorHeight : _colorHeight,
-                padding: EdgeInsets.only(right: 12, top: index == 0 ? statusBarHeight : 0),
-                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.only(top: index == 0 ? statusBarHeight : 0),
+                // alignment: Alignment.centerLeft,
                 duration: const Duration(milliseconds: 400),
                 curve: Curves.easeOutExpo,
                 child: Dismissible(
@@ -163,9 +163,10 @@ class HomeState extends State<Home> {
                       size: 32,
                     ),
                   ),
-                  child: ListTile(
-                    tileColor: Colors.transparent,
-                    title: Row(
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 16, right: 12),
+                    alignment: Alignment.center,
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(

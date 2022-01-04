@@ -199,6 +199,14 @@ class BottomBar extends StatelessWidget {
                 },
                 text: 'How to use?',
               ),
+              BottomSheetItem(
+                icon: Icons.mail_outline,
+                onClick: () async {
+                  const _url = AppURLs.mail;
+                  if (await canLaunch(_url)) await launch(_url);
+                },
+                text: 'Feedback?',
+              ),
             ],
           ),
         );

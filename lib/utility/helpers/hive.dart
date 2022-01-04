@@ -47,7 +47,10 @@ class FavoritePalette {
   }
 
   Future<List<Favorite>> get() async {
-    final box = Hive.box<Favorite>(favoriteColorsKey);
+    if (Hive.isBoxOpen(favoriteColorsKey)) {
+      await Hive.close();
+    }
+    final box = await Hive.openBox<Favorite>(favoriteColorsKey);
     return box.values.toList().reversed.toList();
   }
 }

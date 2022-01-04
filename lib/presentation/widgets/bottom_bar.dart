@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rainbow/constants/app_constants.dart';
+import 'package:rainbow/constants/app_strings.dart';
 import 'package:rainbow/constants/app_urls.dart';
 import 'package:rainbow/presentation/screens/favorites.dart';
 import 'package:rainbow/presentation/widgets/bottom_sheet_item.dart';
@@ -123,14 +124,18 @@ class BottomBar extends StatelessWidget {
             child: OutlinedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  AppHive.favorites
-                      .put(
-                    _nameController.text.trim(),
-                    colorsList,
-                  )
-                      .then((value) {
-                    const snackBar = AppSnackBar(
-                      content: Text('Pelette added to Favorites'),
+                  AppHive.favorites.put(_nameController.text.trim(), colorsList).then((value) {
+                    final snackBar = AppSnackBar(
+                      content: const Text('Pelette added to Favorites'),
+                      action: SnackBarAction(
+                        label: AppStrings.view,
+                        onPressed: () {
+                          Navigator.push<Route>(
+                            context,
+                            MaterialPageRoute(builder: (context) => const FavoritesScreen()),
+                          );
+                        },
+                      ),
                     );
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);

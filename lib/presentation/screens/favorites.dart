@@ -15,8 +15,8 @@ class FavoritesScreenState extends State<FavoritesScreen> {
 
   @override
   void initState() {
-    getPalettes();
     super.initState();
+    getPalettes();
   }
 
   Future<void> getPalettes() async {

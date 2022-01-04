@@ -34,8 +34,9 @@ class ColorScreenState extends State<ColorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: widget.color.withOpacity(0.1),
       appBar: AppBar(
-        // backgroundColor: widget.color,
+        backgroundColor: widget.color.withOpacity(0.1),
         title: Text(
           'Color #${widget.color.toHex()}',
           style: Theme.of(context).appBarTheme.titleTextStyle,

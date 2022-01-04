@@ -71,7 +71,8 @@ class HomeState extends State<Home> {
       ),
       body: Container(
         constraints: const BoxConstraints(),
-        child: ReorderableListView(
+        child: ReorderableListView.builder(
+          itemCount: _colorsList.length,
           onReorder: (oldIndex, newIndex) {
             if (newIndex > oldIndex) {
               newIndex -= 1;
@@ -82,11 +83,11 @@ class HomeState extends State<Home> {
           },
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          children: List.generate(_colorsList.length, (index) {
+          itemBuilder: (BuildContext context, int index) {
             final _color = Color(int.parse('0xFF${_colorsList[index]}'));
-            final _textColor = TinyColor(_color).textColor();
+            final _textColor = _color.textColor();
             return Dismissible(
-              key: Key(_colorsList[index]),
+              key: Key('Color_item_$index'),
               confirmDismiss: (DismissDirection direction) {
                 if (direction == DismissDirection.startToEnd) {
                   if (_lockedColorsList.contains(_colorsList[index])) {
@@ -150,18 +151,21 @@ class HomeState extends State<Home> {
                 },
                 closedShape: const RoundedRectangleBorder(),
                 closedElevation: 0,
-                closedColor: _color,
+                closedColor: Colors.transparent,
                 middleColor: _color,
                 openColor: Theme.of(context).scaffoldBackgroundColor,
                 closedBuilder: (BuildContext _, VoidCallback openContainer) {
-                  return Container(
-                    height: index == 0 ? statusBarHeight + _colorHeight : _colorHeight,
+                  return AnimatedContainer(
+                    key: Key('color_$index'),
                     color: _color,
+                    height: index == 0 ? statusBarHeight + _colorHeight : _colorHeight,
                     padding: EdgeInsets.only(right: 12, top: index == 0 ? statusBarHeight : 0),
                     alignment: Alignment.centerLeft,
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeOutExpo,
                     child: ListTile(
-                      tileColor: _color,
-                      hoverColor: _color.darken(5),
+                      key: Key('color_list_$index'),
+                      tileColor: Colors.transparent,
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -197,7 +201,7 @@ class HomeState extends State<Home> {
                 },
               ),
             );
-          }),
+          },
         ),
       ),
     );

@@ -28,11 +28,11 @@ class RainbowApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DevicePreview(
-      // enabled: false,
+      enabled: false,
       // isToolbarVisible: false,
       builder: (context) => MaterialApp(
         title: 'Rainbow',
-        useInheritedMediaQuery: true,
+        // useInheritedMediaQuery: true,
         debugShowCheckedModeBanner: false,
         theme: AppThemes.darkTheme,
         darkTheme: AppThemes.darkTheme,

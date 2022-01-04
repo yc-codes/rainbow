@@ -86,85 +86,83 @@ class HomeState extends State<Home> {
           itemBuilder: (BuildContext context, int index) {
             final _color = Color(int.parse('0xFF${_colorsList[index]}'));
             final _textColor = _color.textColor();
-            return Dismissible(
-              key: Key('Color_item_$index'),
-              confirmDismiss: (DismissDirection direction) {
-                if (direction == DismissDirection.startToEnd) {
-                  if (_lockedColorsList.contains(_colorsList[index])) {
-                    _lockedColorsList.remove(_colorsList[index]);
-                  } else {
-                    _lockedColorsList.add(_colorsList[index]);
-                  }
-                  _notify();
-                  return Future<bool>.value(false);
-                }
+            return OpenContainer<bool>(
+              key: Key('color_wrapper_$index'),
+              transitionType: _transitionType,
+              openBuilder: (BuildContext _, VoidCallback openContainer) => ColorScreen(color: _color),
+              closedShape: const RoundedRectangleBorder(),
+              closedElevation: 0,
+              closedColor: Colors.transparent,
+              middleColor: _color,
+              openColor: TinyColor.fromHSL(_color.toHsl()..l = 0.15).color,
+              closedBuilder: (BuildContext _, VoidCallback openContainer) {
+                return AnimatedContainer(
+                  key: Key('color_$index'),
+                  color: _color,
+                  height: index == 0 ? statusBarHeight + _colorHeight : _colorHeight,
+                  padding: EdgeInsets.only(right: 12, top: index == 0 ? statusBarHeight : 0),
+                  alignment: Alignment.centerLeft,
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeOutExpo,
+                  child: Dismissible(
+                    key: Key('dismissable_$_color'),
+                    confirmDismiss: (DismissDirection direction) {
+                      if (direction == DismissDirection.startToEnd) {
+                        if (_lockedColorsList.contains(_colorsList[index])) {
+                          _lockedColorsList.remove(_colorsList[index]);
+                        } else {
+                          _lockedColorsList.add(_colorsList[index]);
+                        }
+                        _notify();
+                        return Future<bool>.value(false);
+                      }
 
-                if (_colorsList.length == minColorLength) {
-                  final snackBar = AppSnackBar(
-                    content: const Text("You can't remove any more colors"),
-                    action: SnackBarAction(
-                      label: 'OKAY',
-                      onPressed: () {},
+                      if (_colorsList.length == minColorLength) {
+                        final snackBar = AppSnackBar(
+                          content: const Text("You can't remove any more colors"),
+                          action: SnackBarAction(
+                            label: 'OKAY',
+                            onPressed: () {},
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        return Future<bool>.value(false);
+                      }
+
+                      return Future<bool>.value(true);
+                    },
+                    onDismissed: (DismissDirection direction) {
+                      _lockedColorsList.remove(_colorsList[index]);
+                      _colorsList.removeAt(index);
+                      AppHive.home.put(_colorsList);
+                      _notify();
+                    },
+                    background: AnimatedContainer(
+                      color: _color.darken(6),
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      curve: Curves.easeOutExpo,
+                      duration: const Duration(
+                        milliseconds: 200,
+                      ),
+                      child: Icon(
+                        _lockedColorsList.contains(_colorsList[index]) ? Icons.lock_open : Icons.lock,
+                        color: _color.textColor(),
+                        size: 32,
+                      ),
                     ),
-                  );
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  return Future<bool>.value(false);
-                }
-
-                return Future<bool>.value(true);
-              },
-              onDismissed: (DismissDirection direction) {
-                _lockedColorsList.remove(_colorsList[index]);
-                _colorsList.removeAt(index);
-                AppHive.home.put(_colorsList);
-                _notify();
-              },
-              background: AnimatedContainer(
-                color: _color.darken(6),
-                alignment: Alignment.centerLeft,
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                curve: Curves.easeOutExpo,
-                duration: const Duration(
-                  milliseconds: 200,
-                ),
-                child: Icon(
-                  _lockedColorsList.contains(_colorsList[index]) ? Icons.lock_open : Icons.lock,
-                  color: _color.textColor(),
-                  size: 32,
-                ),
-              ),
-              secondaryBackground: Container(
-                color: _color.darken(6),
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Icon(
-                  Icons.remove_circle_outline,
-                  color: _color.textColor(),
-                  size: 32,
-                ),
-              ),
-              child: OpenContainer<bool>(
-                transitionType: _transitionType,
-                openBuilder: (BuildContext _, VoidCallback openContainer) {
-                  return ColorScreen(color: _color);
-                },
-                closedShape: const RoundedRectangleBorder(),
-                closedElevation: 0,
-                closedColor: Colors.transparent,
-                middleColor: _color,
-                openColor: Theme.of(context).scaffoldBackgroundColor,
-                closedBuilder: (BuildContext _, VoidCallback openContainer) {
-                  return AnimatedContainer(
-                    key: Key('color_$index'),
-                    color: _color,
-                    height: index == 0 ? statusBarHeight + _colorHeight : _colorHeight,
-                    padding: EdgeInsets.only(right: 12, top: index == 0 ? statusBarHeight : 0),
-                    alignment: Alignment.centerLeft,
-                    duration: const Duration(milliseconds: 400),
-                    curve: Curves.easeOutExpo,
+                    secondaryBackground: Container(
+                      color: _color.darken(6),
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Icon(
+                        Icons.remove_circle_outline,
+                        color: _color.textColor(),
+                        size: 32,
+                      ),
+                    ),
                     child: ListTile(
-                      key: Key('color_list_$index'),
                       tileColor: Colors.transparent,
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -197,9 +195,9 @@ class HomeState extends State<Home> {
                         ],
                       ),
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             );
           },
         ),

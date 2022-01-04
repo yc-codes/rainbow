@@ -33,10 +33,12 @@ class ColorScreenState extends State<ColorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bgx = TinyColor.fromHSL(widget.color.toHsl()..l = 0.15).color;
+
     return Scaffold(
-      backgroundColor: widget.color.withOpacity(0.1),
+      backgroundColor: bgx,
       appBar: AppBar(
-        backgroundColor: widget.color.withOpacity(0.1),
+        backgroundColor: bgx,
         title: Text(
           'Color #${widget.color.toHex()}',
           style: Theme.of(context).appBarTheme.titleTextStyle,

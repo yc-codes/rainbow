@@ -8,4 +8,7 @@ class AppConstants {
     'FF7F00',
     'FF0000',
   ];
+  static const double bottomBarHeight = 62;
+  static const int minColorLength = 2;
+  static const int maxColorLength = 10;
 }

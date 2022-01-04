@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rainbow/constants/app_constants.dart';
 import 'package:rainbow/constants/app_urls.dart';
 import 'package:rainbow/presentation/screens/favorites.dart';
 import 'package:rainbow/presentation/widgets/bottom_sheet_item.dart';
@@ -23,7 +24,7 @@ class BottomBar extends StatelessWidget {
     final bottomPadding = MediaQuery.of(context).padding.bottom;
     return Container(
       padding: EdgeInsets.fromLTRB(16, 8, 16, 8 + bottomPadding),
-      height: kBottomNavigationBarHeight + bottomPadding,
+      height: AppConstants.bottomBarHeight + bottomPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -175,18 +176,8 @@ class BottomBar extends StatelessWidget {
             children: <Widget>[
               BottomSheetItem(
                 icon: Icons.favorite_border_rounded,
-                onClick: () {
-                  saveToFavorite(context);
-                },
+                onClick: () => saveToFavorite(context),
                 text: 'Save to Favorites',
-              ),
-              BottomSheetItem(
-                icon: Icons.share,
-                onClick: () async {
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  ScaffoldMessenger.of(context).showSnackBar(comingSoonSnackBar(context));
-                },
-                text: 'Share Palette',
               ),
               BottomSheetItem(
                 icon: Icons.favorite_rounded,
@@ -196,37 +187,13 @@ class BottomBar extends StatelessWidget {
                 text: 'Favorites',
               ),
               BottomSheetItem(
-                icon: Icons.image,
-                onClick: () {
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  ScaffoldMessenger.of(context).showSnackBar(comingSoonSnackBar(context));
-                },
-                text: 'Generate Palette from Image',
-              ),
-              BottomSheetItem(
-                icon: Icons.upcoming,
-                onClick: () async {
-                  const _url = AppURLs.upcomingFeatures;
-                  if (await canLaunch(_url)) await launch(_url);
-                },
-                text: 'Upcoming Features',
-              ),
-              BottomSheetItem(
                 icon: Icons.help_outline,
                 onClick: () async {
                   const _url = AppURLs.howToUse;
                   if (await canLaunch(_url)) await launch(_url);
                 },
-                text: 'How to use',
+                text: 'How to use?',
               ),
-              // BottomSheetItem(
-              //   icon: Icons.settings,
-              //   onClick: () {
-              //     ScaffoldMessenger.of(context)
-              //         .showSnackBar(comingSoonSnackBar(context));
-              //   },
-              //   text: "Settings",
-              // ),
             ],
           ),
         );

@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rainbow/data/models/favorite.dart';
 
@@ -12,6 +15,7 @@ class FavoritesScreen extends StatefulWidget {
 
 class FavoritesScreenState extends State<FavoritesScreen> {
   List<Favorite> paletteList = [];
+  List<int> selectedItem = [];
 
   @override
   void initState() {
@@ -30,6 +34,7 @@ class FavoritesScreenState extends State<FavoritesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    log(selectedItem.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -54,6 +59,7 @@ class FavoritesScreenState extends State<FavoritesScreen> {
           itemCount: paletteList.length,
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
+              key: Key('favorite_$index'),
               title: Text(
                 paletteList[index].name,
                 style: Theme.of(context).textTheme.headline6,
@@ -65,19 +71,32 @@ class FavoritesScreenState extends State<FavoritesScreen> {
                     ...paletteList[index].colors.asMap().entries.map((element) {
                       final first = element.key == 0;
                       final last = element.key == (paletteList[index].colors.length - 1);
-                      return Flexible(
-                        fit: FlexFit.tight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Color(int.parse('0xFF${element.value}')),
-                            borderRadius: BorderRadius.only(
-                              topLeft: first ? const Radius.circular(8) : Radius.zero,
-                              bottomLeft: first ? const Radius.circular(8) : Radius.zero,
-                              topRight: last ? const Radius.circular(8) : Radius.zero,
-                              bottomRight: last ? const Radius.circular(8) : Radius.zero,
+                      final mySelectionId = [index, element.key];
+                      final isSelect = selectedItem.equals(mySelectionId);
+                      return Expanded(
+                        key: Key('item_$index${element.key}'),
+                        flex: isSelect ? 4 : 1,
+                        child: GestureDetector(
+                          onTap: () {
+                            log(mySelectionId.toString());
+                            selectedItem = mySelectionId;
+                            _notify();
+                            log(selectedItem.toString());
+                          },
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOutExpo,
+                            decoration: BoxDecoration(
+                              color: Color(int.parse('0xFF${element.value}')),
+                              borderRadius: BorderRadius.only(
+                                topLeft: first ? const Radius.circular(8) : Radius.zero,
+                                bottomLeft: first ? const Radius.circular(8) : Radius.zero,
+                                topRight: last ? const Radius.circular(8) : Radius.zero,
+                                bottomRight: last ? const Radius.circular(8) : Radius.zero,
+                              ),
                             ),
+                            height: 38,
                           ),
-                          height: 40,
                         ),
                       );
                     }),
@@ -89,5 +108,11 @@ class FavoritesScreenState extends State<FavoritesScreen> {
         ),
       ),
     );
+  }
+}
+
+extension on List<int> {
+  bool equals(List<int> list) {
+    return listEquals<int>(this, list) == true;
   }
 }

@@ -54,7 +54,7 @@ class AppThemes {
         highlightColor: Colors.transparent,
         // typography: Typography(),
         appBarTheme: AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
+          systemOverlayStyle: SystemUiOverlayStyle.light,
           color: Colors.grey.shade900,
           elevation: 1,
           centerTitle: true,
@@ -64,7 +64,6 @@ class AppThemes {
           titleTextStyle: GoogleFonts.inter(
             color: Colors.white,
             fontSize: 16,
-            fontWeight: FontWeight.w600,
           ),
         ),
         dividerColor: Colors.grey.shade700,

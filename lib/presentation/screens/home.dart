@@ -97,6 +97,8 @@ class HomeState extends State<Home> {
               closedShape: const RoundedRectangleBorder(),
               closedElevation: 0,
               middleColor: _color,
+              closedColor: _color,
+              openColor: _color,
               closedBuilder: (BuildContext _, VoidCallback openContainer) => AnimatedContainer(
                 key: Key('color_$index'),
                 color: _color,

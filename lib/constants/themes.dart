@@ -3,6 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppThemes {
+  static ThemeData lightTheme = AppThemes.darkTheme.copyWith(
+    dividerColor: Colors.blue,
+    scaffoldBackgroundColor: Colors.pink.shade100,
+  );
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     fontFamily: 'Inter',

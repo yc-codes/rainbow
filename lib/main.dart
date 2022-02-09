@@ -1,8 +1,9 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:rainbow/constants/themes.dart';
+import 'package:rainbow/bloc/theme.dart';
 import 'package:rainbow/data/models/favorite.dart';
 import 'package:rainbow/presentation/screens/home.dart';
 
@@ -20,7 +21,9 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then(
-    (_) => runApp(const RainbowApp()),
+    (_) => runApp(
+      const RainbowApp(),
+    ),
   );
 }
 
@@ -33,15 +36,18 @@ class RainbowApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return DevicePreview(
       enabled: false,
-      // isToolbarVisible: false,
-      builder: (context) => MaterialApp(
-        title: 'Rainbow',
-        // useInheritedMediaQuery: true,
-        debugShowCheckedModeBanner: false,
-        theme: AppThemes.darkTheme,
-        darkTheme: AppThemes.darkTheme,
-        themeMode: ThemeMode.dark,
-        home: const Home(),
+      builder: (context) => BlocProvider(
+        create: (_) => ThemeCubit(),
+        child: BlocBuilder<ThemeCubit, ThemeData>(
+          builder: (_, theme) {
+            return MaterialApp(
+              title: 'Rainbow',
+              debugShowCheckedModeBanner: false,
+              theme: theme,
+              home: const Home(),
+            );
+          },
+        ),
       ),
     );
   }

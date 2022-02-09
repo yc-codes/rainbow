@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:rainbow/bloc/theme.dart';
 import 'package:rainbow/constants/app_constants.dart';
 import 'package:rainbow/constants/app_strings.dart';
 import 'package:rainbow/data/models/favorite.dart';
@@ -14,6 +15,7 @@ import 'package:rainbow/utility/extensions/colors.dart';
 import 'package:rainbow/utility/helpers/color.dart';
 import 'package:rainbow/utility/helpers/hive.dart';
 import 'package:tinycolor/tinycolor.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -72,6 +74,12 @@ class HomeState extends State<Home> {
         onGenerateClick: _refreshColors,
         onPlusClick: addColorToList,
         colorsList: _colorsList,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.read<ThemeCubit>().toggleTheme();
+        },
+        child: const Icon(Icons.palette_sharp),
       ),
       body: ConstrainedBox(
         constraints: const BoxConstraints(),

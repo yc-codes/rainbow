@@ -18,7 +18,7 @@ class BottomSheetItem extends StatelessWidget {
       leading: Icon(icon),
       title: Text(
         text,
-        style: Theme.of(context).textTheme.bodyText1,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
       horizontalTitleGap: 0,
       onTap: () {

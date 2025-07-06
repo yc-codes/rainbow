@@ -63,7 +63,7 @@ class ColorScreenState extends State<ColorScreen> {
               padding: const EdgeInsets.fromLTRB(12, 24, 0, 12),
               child: Text(
                 'Shades',
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
             ListView.builder(

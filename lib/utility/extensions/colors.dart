@@ -14,9 +14,9 @@ extension HexColor on Color {
               '${blue.toRadixString(16).padLeft(2, '0')}'
           .toUpperCase();
 
-  String toRGBString() => '${red.toString()}, '
-          '${green.toString()}, '
-          '${blue.toString()}'
+  String toRGBString() => '${red}, '
+          '${green}, '
+          '${blue}'
       .toUpperCase();
 
   Color textColor() => TinyColor(this).isDark() ? Colors.white : Colors.black;

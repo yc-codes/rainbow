@@ -62,7 +62,7 @@ class FavoritesScreenState extends State<FavoritesScreen> {
               key: Key('favorite_$index'),
               title: Text(
                 paletteList[index].name,
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               subtitle: Container(
                 padding: const EdgeInsets.only(top: 6, bottom: 8),

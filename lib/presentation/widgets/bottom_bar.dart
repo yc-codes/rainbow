@@ -37,7 +37,7 @@ class BottomBar extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Icon(
                 Icons.more_horiz_rounded,
-                color: Theme.of(context).textTheme.bodyText1!.color,
+                color: Theme.of(context).textTheme.bodyLarge!.color,
                 size: 30,
               ),
             ),
@@ -50,7 +50,7 @@ class BottomBar extends StatelessWidget {
                 child: Text(
                   'Generate',
                   style: TextStyle(
-                    color: Theme.of(context).textTheme.bodyText1!.color,
+                    color: Theme.of(context).textTheme.bodyLarge!.color,
                     fontSize: 18,
                     fontWeight: FontWeight.normal,
                   ),
@@ -64,7 +64,7 @@ class BottomBar extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Icon(
                 Icons.add,
-                color: Theme.of(context).textTheme.bodyText1!.color,
+                color: Theme.of(context).textTheme.bodyLarge!.color,
                 size: 30,
               ),
             ),
@@ -97,7 +97,7 @@ class BottomBar extends StatelessWidget {
           padding: const EdgeInsets.only(top: 8),
           child: Text(
             'Palette',
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
         content: Form(
@@ -144,14 +144,14 @@ class BottomBar extends StatelessWidget {
                 }
               },
               style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
-                    padding: MaterialStateProperty.all<EdgeInsets>(
+                    padding: WidgetStateProperty.all<EdgeInsets>(
                       const EdgeInsets.symmetric(vertical: 10),
                     ),
                   ),
               child: Text(
                 'Save',
                 style: TextStyle(
-                  color: Theme.of(context).textTheme.bodyText1!.color,
+                  color: Theme.of(context).textTheme.bodyLarge!.color,
                   fontSize: 18,
                   fontWeight: FontWeight.normal,
                 ),

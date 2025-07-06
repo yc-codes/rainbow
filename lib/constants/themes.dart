@@ -19,11 +19,11 @@ class AppThemes {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
-        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.grey.shade900),
+        padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero),
+        backgroundColor: WidgetStateProperty.all<Color>(Colors.grey.shade900),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        minimumSize: MaterialStateProperty.all<Size>(Size.zero),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        minimumSize: WidgetStateProperty.all<Size>(Size.zero),
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.5),
           ),
@@ -37,19 +37,19 @@ class AppThemes {
     ),
     textTheme: GoogleFonts.interTextTheme(
       const TextTheme(
-        bodyText1: TextStyle(
+        bodyLarge: TextStyle(
           color: Colors.white,
           fontSize: 16,
         ),
-        bodyText2: TextStyle(
+        bodyMedium: TextStyle(
           color: Colors.white,
           fontSize: 16,
         ),
-        headline6: TextStyle(
+        titleLarge: TextStyle(
           color: Colors.white,
           fontSize: 16,
         ),
-        subtitle1: TextStyle(
+        titleMedium: TextStyle(
           color: Colors.grey,
           fontSize: 14,
         ),

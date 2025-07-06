@@ -12,7 +12,7 @@ class AppOutlinedButton extends StatelessWidget {
       child: Text(
         'Generate',
         style: TextStyle(
-          color: Theme.of(context).textTheme.bodyText1?.color,
+          color: Theme.of(context).textTheme.bodyLarge?.color,
           fontSize: 18,
           fontWeight: FontWeight.normal,
         ),
